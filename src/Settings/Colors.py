@@ -14,3 +14,11 @@ class AppColors:
     # Recipe Item View
     RecipeItemViewBackground = PrimaryColor
     RecipeItemViewFontColor = FontColor
+
+    # ============= Ingredient =============
+    # Ingredient List View
+    IngredientListBackGround = PrimaryBackGround
+
+    # Ingredient Item View
+    IngredientItemViewBackground = PrimaryColor
+    IngredientItemViewFontColor = FontColor

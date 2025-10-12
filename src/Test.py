@@ -1,47 +1,73 @@
 import flet as ft
 
 
-def main(page: ft.Page):
-    page.title = "Routes Example"
-
-    def route_change(route):
-        page.views.append(
-            ft.View(
-                "/",
-                [
-                    ft.AppBar(
-                        title=ft.Text("Flet app"),
-                        bgcolor=ft.Colors.SURFACE_CONTAINER_HIGHEST,
-                    ),
-                    ft.ElevatedButton(
-                        "Visit Store", on_click=lambda _: page.go("/store")
-                    ),
-                ],
+def main(page):
+    page.title = "ListTile Examples"
+    page.add(
+        ft.Card(
+            content=ft.Container(
+                width=500,
+                content=ft.Column(
+                    [
+                        ft.ListTile(
+                            title=ft.Text("One-line list tile"),
+                        ),
+                        ft.ListTile(
+                            title=ft.Text("One-line dense list tile"), dense=True
+                        ),
+                        ft.ListTile(
+                            leading=ft.Icon(ft.Icons.SETTINGS),
+                            title=ft.Text("One-line selected list tile"),
+                            selected=True,
+                        ),
+                        ft.ListTile(
+                            leading=ft.Image(src="/icons/icon-192.png", fit="contain"),
+                            title=ft.Text("One-line with leading control"),
+                        ),
+                        ft.ListTile(
+                            title=ft.Text("One-line with trailing control"),
+                            trailing=ft.PopupMenuButton(
+                                icon=ft.Icons.MORE_VERT,
+                                items=[
+                                    ft.PopupMenuItem(text="Item 1"),
+                                    ft.PopupMenuItem(text="Item 2"),
+                                ],
+                            ),
+                        ),
+                        ft.ListTile(
+                            leading=ft.Icon(ft.Icons.ALBUM),
+                            title=ft.Text(
+                                "One-line with leading and trailing controls"
+                            ),
+                            trailing=ft.PopupMenuButton(
+                                icon=ft.Icons.MORE_VERT,
+                                items=[
+                                    ft.PopupMenuItem(text="Item 1"),
+                                    ft.PopupMenuItem(text="Item 2"),
+                                ],
+                            ),
+                        ),
+                        ft.ListTile(
+                            leading=ft.Icon(ft.Icons.SNOOZE),
+                            title=ft.Text(
+                                "Two-line with leading and trailing controls"
+                            ),
+                            subtitle=ft.Text("Here is a second title."),
+                            trailing=ft.PopupMenuButton(
+                                icon=ft.Icons.MORE_VERT,
+                                items=[
+                                    ft.PopupMenuItem(text="Item 1"),
+                                    ft.PopupMenuItem(text="Item 2"),
+                                ],
+                            ),
+                        ),
+                    ],
+                    spacing=0,
+                ),
+                padding=ft.padding.symmetric(vertical=10),
             )
         )
-        if page.route == "/store":
-            page.views.append(
-                ft.View(
-                    "/store",
-                    [
-                        ft.AppBar(
-                            title=ft.Text("Store"),
-                            bgcolor=ft.Colors.SURFACE_CONTAINER_HIGHEST,
-                        ),
-                        ft.ElevatedButton("Go Home", on_click=lambda _: page.go("/")),
-                    ],
-                )
-            )
-        page.update()
-
-    def view_pop(view):
-        page.views.pop()
-        top_view = page.views[-1]
-        page.go(top_view.route)
-
-    page.on_route_change = route_change
-    page.on_view_pop = view_pop
-    page.go(page.route)
+    )
 
 
-ft.app(main, assets_dir="assets", view=ft.AppView.WEB_BROWSER)
+ft.app(main)
