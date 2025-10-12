@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 import Recipe.Recipe as Recipe
-from Ingredient.Ingredient import Ingredient
+import Ingredient.Ingredient as Ingredient
 
 def LoadRecipes():
     return [
@@ -27,17 +29,17 @@ def LoadRecipes():
 
 def LoadIngredients():
     return [
-        Ingredient(1, "Sel"),
-        Ingredient(2, "Poivre"),
-        Ingredient(3, "Huile d'olive"),
-        Ingredient(4, "Beurre"),
-        Ingredient(5, "Ail"),
-        Ingredient(6, "Oignon"),
-        Ingredient(7, "Tomate"),
-        Ingredient(8, "Basilic"),
-        Ingredient(9, "Parmesan"),
-        Ingredient(10, "Spaghetti"),
-        Ingredient(11, "Riz"),
-        Ingredient(12, "Poulet"),
-        Ingredient(13, "Boeuf"),
+        Ingredient.Ingredient(1, "Sel"),
+        Ingredient.Ingredient(2, "Poivre"),
+        Ingredient.Ingredient(3, "Huile d'olive"),
+        Ingredient.Ingredient(4, "Beurre"),
+        Ingredient.Ingredient(5, "Ail"),
+        Ingredient.Ingredient(6, "Oignon"),
+        Ingredient.Ingredient(7, "Tomate"),
+        Ingredient.Ingredient(8, "Basilic"),
+        Ingredient.Ingredient(9, "Parmesan"),
+        Ingredient.Ingredient(10, "Spaghetti"),
+        Ingredient.Ingredient(11, "Riz"),
+        Ingredient.Ingredient(12, "Poulet"),
+        Ingredient.Ingredient(13, "Boeuf"),
     ]

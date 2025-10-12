@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import flet
 import Rout
 import DataSource.DataSource as DataSource
-from Settings.Colors import AppColors
+import Settings.Colors as AppColors
 import Ingredient.Ingredient as Ingredient
 
 class Recipe:
@@ -15,21 +17,21 @@ class Recipe:
             flet.Container(
                 content=flet.Text(
                     self.name,
-                    color=AppColors.RecipeItemViewFontColor,
+                    color=AppColors.AppColors.RecipeItemViewFontColor,
                 ),
-                bgcolor=AppColors.IngredientItemViewBackground,
+                bgcolor=AppColors.AppColors.IngredientItemViewBackground,
                 alignment=flet.alignment.center,
             ),
             flet.Text(
                 "Ingredients :",
-                color=AppColors.RecipeItemViewFontColor,
-                bgcolor=AppColors.IngredientItemViewBackground,
+                color=AppColors.AppColors.RecipeItemViewFontColor,
+                bgcolor=AppColors.AppColors.IngredientItemViewBackground,
             ),
             Ingredient.Ingredient.GetListView(self.items),
             flet.Text(
                 "Steps :",
-                color=AppColors.RecipeItemViewFontColor,
-                bgcolor=AppColors.IngredientItemViewBackground,
+                color=AppColors.AppColors.RecipeItemViewFontColor,
+                bgcolor=AppColors.AppColors.IngredientItemViewBackground,
             ),
         ])
 
@@ -50,11 +52,11 @@ class Recipe:
                 content=flet.Text(
                     self.name,
                     text_align=flet.TextAlign.CENTER,
-                    color=AppColors.RecipeItemViewFontColor,
+                    color=AppColors.AppColors.RecipeItemViewFontColor,
                 ),
                 on_click=lambda e: Rout.Rout.Go(f"/Recipes/{self.id}/"),
                 border_radius=10,
             ),
-            bgcolor=AppColors.RecipeItemViewBackground,
+            bgcolor=AppColors.AppColors.RecipeItemViewBackground,
             alignment=flet.alignment.center,
         )

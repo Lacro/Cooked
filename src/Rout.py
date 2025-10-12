@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 import flet
 import Recipe.Recipe as Recipe
-from DataSource.DataSource import DataSource
+import DataSource.DataSource as DB
 from flet import TemplateRoute
 
 class Rout:
@@ -43,7 +45,7 @@ class Rout:
 
             elif Rout.RouteIsLike("/Recipes/:id") and hasattr(Rout.template_route, 'id'):
                 print(f"Matched recipe route with id: {Rout.template_route.id}")
-                recipe = DataSource.GetRecipeByID(int(Rout.template_route.id))
+                recipe = DB.DataSource.GetRecipeByID(int(Rout.template_route.id))
                 if recipe:
                     curent_view = recipe.GetView()
                 else:
@@ -51,7 +53,7 @@ class Rout:
 
             elif Rout.RouteIsLike("/Ingredients/:id") and hasattr(Rout.template_route, 'id'):
                 print(f"Matched ingredient route with id: {Rout.template_route.id}")
-                ingredient = DataSource.GetIngredientByID(int(Rout.template_route.id))
+                ingredient = DB.DataSource.GetIngredientByID(int(Rout.template_route.id))
                 if ingredient:
                     curent_view = ingredient.GetView()
                 else:

@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import flet
 import Rout
 import DataSource.DataSource as DataSource
-from Settings.Colors import AppColors
+import Settings.Colors as AppColors
 
 class Ingredient:
     def __init__(self, id: int, name: str):
@@ -13,9 +15,9 @@ class Ingredient:
             content=flet.Text(
                     self.name,
                     text_align=flet.TextAlign.CENTER,
-                    color=AppColors.IngredientItemViewFontColor,
+                    color=AppColors.AppColors.IngredientItemViewFontColor,
                 ),
-            bgcolor=AppColors.IngredientItemViewBackground,
+            bgcolor=AppColors.AppColors.IngredientItemViewBackground,
             alignment=flet.alignment.center,
         )
     
@@ -42,11 +44,11 @@ class Ingredient:
                 content=flet.Text(
                     self.name,
                     text_align=flet.TextAlign.CENTER,
-                    color=AppColors.IngredientItemViewFontColor,
+                    color=AppColors.AppColors.IngredientItemViewFontColor,
                 ),
                 on_click=lambda e: Rout.Rout.Go(f"/Ingredients/{self.id}/"),
                 border_radius=10,
             ),
-            bgcolor=AppColors.IngredientItemViewBackground,
+            bgcolor=AppColors.AppColors.IngredientItemViewBackground,
             alignment=flet.alignment.center,
         )
