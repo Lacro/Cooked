@@ -36,95 +36,43 @@ class Rout:
             print(f"Route changed to: {e}")
             Rout.template_route.route = e.route # update the route in the template route module
 
+            curent_view = flet.Text(f"404: Page not Found : {e.route}")
+
             if Rout.RouteIsLike("/") or Rout.RouteIsLike(Rout.HomeRecipesRoute):
-                Rout.page.views.clear()
-                Rout.page.views.append(
-                    flet.View(
-                        controls = [
-                            flet.Text("Recipes"),
-                            flet.Text(f"Initial route: {e.route}"),
-                            RecipeListView().GetView(),
-                            navigationBar,
-                        ],
-                    )
-                )
+                curent_view = RecipeListView().GetView()
 
             elif Rout.RouteIsLike("/Recipes/:id") and hasattr(Rout.template_route, 'id'):
-                Rout.page.views.clear()
                 print(f"Matched recipe route with id: {Rout.template_route.id}")
                 recipe = DataSource.GetRecipeByID(int(Rout.template_route.id))
                 if recipe is None:
-                    Rout.page.views.append(
-                        flet.View(
-                            controls = [
-                                flet.Text(f"Recipe {Rout.template_route.id} not found"),
-                                flet.Text(f"Initial route: {e.route}"),
-                                navigationBar,
-                            ],
-                        )
-                    )
+                    curent_view = flet.Text(f"Recipe {Rout.template_route.id} not found"),
                 else:
-                    Rout.page.views.append(
-                        flet.View(
-                            controls = [
-                                flet.Text(f"Recipe {Rout.template_route.id}"),
-                                flet.Text(f"Initial route: {e.route}"),
-                                recipe.GetView(),
-                                navigationBar,
-                            ],
-                        )
-                    )
+                    curent_view = recipe.GetView()
 
             elif Rout.RouteIsLike("/Ingredients/:id") and hasattr(Rout.template_route, 'id'):
-                Rout.page.views.clear()
                 print(f"Matched ingredient route with id: {Rout.template_route.id}")
                 ingredient = DataSource.GetIngredientByID(int(Rout.template_route.id))
                 if ingredient is None:
-                    Rout.page.views.append(
-                        flet.View(
-                            controls = [
-                                flet.Text(f"Ingredient {Rout.template_route.id} not found"),
-                                flet.Text(f"Initial route: {e.route}"),
-                                navigationBar,
-                            ],
-                        )
-                    )
+                    curent_view = flet.Text(f"Ingredient {Rout.template_route.id} not found")
                 else:
-                    Rout.page.views.append(
-                        flet.View(
-                            controls = [
-                                flet.Text(f"Ingredient {Rout.template_route.id}"),
-                                flet.Text(f"Initial route: {e.route}"),
-                                ingredient.GetView(),
-                                navigationBar,
-                            ],
-                        )
-                    )
+                    curent_view = ingredient.GetView()
 
             elif Rout.RouteIsLike(Rout.HomeShoppingRoute):
-                Rout.page.views.clear()
-                Rout.page.views.append(
-                    flet.View(
-                        controls = [
-                            flet.Text("Shopping"),
-                            flet.Text(f"Initial route: {e.route}"),
-                            navigationBar,
-                        ],
-                    )
-                )
+                curent_view = flet.Text("Shopping")
 
             elif Rout.RouteIsLike(Rout.HomeParamsRoute):
-                Rout.page.views.clear()
-                Rout.page.views.append(
-                    flet.View(
-                        controls = [
-                            flet.Text("Params"),
-                            flet.Text(f"Initial route: {e.route}"),
-                            navigationBar,
-                        ],
-                    )
+                curent_view = flet.Text("Params")
+                
+            Rout.page.views.clear()
+            Rout.page.views.append(
+                flet.View(
+                    controls = [
+                        flet.Text(f"Route: {e.route}"),
+                        curent_view,
+                        navigationBar,
+                    ],
                 )
-
+            )
             Rout.page.update()
 
         return on_rout_change
