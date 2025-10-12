@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import flet
 import Rout
 import DataSource.DataSource as DataSource

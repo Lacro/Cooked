@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import flet
 import Recipe.Recipe as Recipe
 import DataSource.DataSource as DB

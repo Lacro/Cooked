@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import Recipe.Recipe as Recipe
 import Ingredient.Ingredient as Ingredient
 
