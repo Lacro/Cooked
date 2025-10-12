@@ -1,5 +1,5 @@
 import flet
-from Recipe.RecipeView import RecipeListView
+import Recipe.Recipe as Recipe
 from DataSource.DataSource import DataSource
 from flet import TemplateRoute
 
@@ -39,23 +39,23 @@ class Rout:
             curent_view = flet.Text(f"404: Page not Found : {e.route}")
 
             if Rout.RouteIsLike("/") or Rout.RouteIsLike(Rout.HomeRecipesRoute):
-                curent_view = RecipeListView().GetView()
+                curent_view = Recipe.Recipe.GetListView()
 
             elif Rout.RouteIsLike("/Recipes/:id") and hasattr(Rout.template_route, 'id'):
                 print(f"Matched recipe route with id: {Rout.template_route.id}")
                 recipe = DataSource.GetRecipeByID(int(Rout.template_route.id))
-                if recipe is None:
-                    curent_view = flet.Text(f"Recipe {Rout.template_route.id} not found"),
-                else:
+                if recipe:
                     curent_view = recipe.GetView()
+                else:
+                    curent_view = flet.Text(f"Recipe {Rout.template_route.id} not found")
 
             elif Rout.RouteIsLike("/Ingredients/:id") and hasattr(Rout.template_route, 'id'):
                 print(f"Matched ingredient route with id: {Rout.template_route.id}")
                 ingredient = DataSource.GetIngredientByID(int(Rout.template_route.id))
-                if ingredient is None:
-                    curent_view = flet.Text(f"Ingredient {Rout.template_route.id} not found")
-                else:
+                if ingredient:
                     curent_view = ingredient.GetView()
+                else:
+                    curent_view = flet.Text(f"Ingredient {Rout.template_route.id} not found")
 
             elif Rout.RouteIsLike(Rout.HomeShoppingRoute):
                 curent_view = flet.Text("Shopping")

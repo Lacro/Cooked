@@ -1,19 +1,19 @@
 import DataSource.LoadData as LoadData
-from Recipe.Recipe import Recipe
+import Recipe.Recipe
 from Ingredient.Ingredient import Ingredient
 
 class DataSource:
     # ============= Recipes =============
     recipes = []
     @staticmethod
-    def GetRecipes() -> list[Recipe]:
+    def GetRecipes() -> list:
         if not DataSource.recipes:
             DataSource.recipes = LoadData.LoadRecipes()
 
         return DataSource.recipes
     
     @staticmethod
-    def GetRecipeByID(id: int) -> Recipe | None:
+    def GetRecipeByID(id: int):
         print(f"GetRecipeByID {id}")
         for recipe in DataSource.GetRecipes():
             if recipe.id == id:
@@ -36,3 +36,8 @@ class DataSource:
             if ingredient.id == id:
                 return ingredient
         return None
+    
+    @staticmethod
+    def AddIngredient(ingredient: Ingredient):
+        if ingredient not in DataSource.ingredients:
+            DataSource.ingredients.append(ingredient)
