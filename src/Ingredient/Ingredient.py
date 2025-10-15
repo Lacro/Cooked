@@ -23,16 +23,14 @@ class Ingredient:
     def GetListView(selection:list[int] = []) -> flet.View:
         ingredients = DataSource.DataSource.GetIngredients()
 
-        grid = flet.GridView()
-        grid.runs_count = 3
+        if selection: displayIngredients = [ing for ing in ingredients if ing.id in selection]
+        else        : displayIngredients = ingredients
 
-        if selection:
-            displayIngredients = [ing for ing in ingredients if ing.id in selection]
-        else:
-            displayIngredients = ingredients
-
-        for ingredient in displayIngredients:
-            grid.controls.append(ingredient.GetItemView())
+        grid = flet.GridView(
+            controls=[ing.GetItemView() for ing in displayIngredients],
+            runs_count=3,
+            expand=1,
+        )
         
         return grid
 

@@ -35,12 +35,12 @@ class Recipe:
 
     @staticmethod
     def GetListView() -> flet.View:
-        recipes = DataSource.DataSource.GetRecipes()
 
-        grid = flet.GridView()
-        grid.runs_count = 3
-        for recipe in recipes:
-            grid.controls.append(recipe.GetItemView())
+        grid = flet.GridView(
+            controls= [r.GetItemView() for r in DataSource.DataSource.GetRecipes()],
+            runs_count = 3,
+            expand=1,
+        )
         
         return grid
     
