@@ -21,6 +21,7 @@ class Rout:
         Rout.page.on_view_pop = Rout.get_poper()
         Rout.page.go(page.route)
         Rout.Go = Rout.page.go # easier access to the page.go method
+        Rout.GoBack = Rout.page.on_view_pop # easier access to the page.on_view_pop method
     
     @staticmethod
     def RouteIsLike(route: str) -> bool:
@@ -39,6 +40,7 @@ class Rout:
             curent_view = flet.Text(f"404: Page not Found : {e.route}")
 
             if Rout.RouteIsLike("/") or Rout.RouteIsLike(Rout.HomeRecipesRoute):
+                Rout.page.views.clear()
                 curent_view = Recipe.Recipe.GetListView()
 
             elif Rout.RouteIsLike("/Recipes/:id") and hasattr(Rout.template_route, 'id'):
@@ -58,15 +60,26 @@ class Rout:
                     curent_view = flet.Text(f"Ingredient {Rout.template_route.id} not found")
 
             elif Rout.RouteIsLike(Rout.HomeShoppingRoute):
+                Rout.page.views.clear()
                 curent_view = flet.Text("Shopping")
 
             elif Rout.RouteIsLike(Rout.HomeParamsRoute):
+                Rout.page.views.clear()
                 curent_view = flet.Text("Params")
                 
-            Rout.page.views.clear()
             Rout.page.views.append(
                 flet.View(
+                    route=e.route,
                     controls = [
+                        flet.Text(
+                            f"COOKED",
+                            style=flet.TextThemeStyle.HEADLINE_MEDIUM,
+                            text_align=flet.TextAlign.CENTER,
+                        ),
+                        flet.Button(
+                            "Back",
+                            on_click=Rout.GoBack
+                        ),
                         flet.Text(f"Route: {e.route}"),
                         curent_view,
                         navigationBar,
@@ -74,16 +87,21 @@ class Rout:
                 )
             )
             Rout.page.update()
+        
+            print(f"Added page, new stack:")
+            for i, v in enumerate(Rout.page.views):
+                print(f" {i}: \"{v.route}\"")
+
 
         return on_rout_change
 
     @staticmethod
     def get_poper():
         def on_pop(view):
-            print(f"Pop view")
+            if len(Rout.page.views) >= 2:
+                Rout.page.views.pop()
+            Rout.Go(Rout.page.views[-1].route)
             Rout.page.views.pop()
-            top_view = Rout.page.views[-1]
-            Rout.page.go(top_view.route)
 
         return on_pop
     
