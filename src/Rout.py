@@ -71,14 +71,23 @@ class Rout:
                 flet.View(
                     route=e.route,
                     controls = [
-                        flet.Text(
-                            f"COOKED",
-                            style=flet.TextThemeStyle.HEADLINE_MEDIUM,
-                            text_align=flet.TextAlign.CENTER,
-                        ),
-                        flet.Button(
-                            "Back",
-                            on_click=Rout.GoBack
+                        flet.Container(height = 20), # spacer to avoid front camera inside display
+                        flet.Row(
+                            controls=[
+                                flet.Button(
+                                    "Back",
+                                    on_click=Rout.GoBack
+                                ),
+                                flet.Container(
+                                    flet.Text(
+                                        f"COOKED",
+                                        style=flet.TextThemeStyle.HEADLINE_MEDIUM,
+                                        text_align=flet.TextAlign.CENTER,
+                                    ),
+                                    expand=1,
+                                    alignment=flet.alignment.center,
+                                ),
+                            ],
                         ),
                         flet.Text(f"Route: {e.route}"),
                         curent_view,

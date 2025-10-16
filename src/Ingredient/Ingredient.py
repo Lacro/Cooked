@@ -26,13 +26,19 @@ class Ingredient:
         if selection: displayIngredients = [ing for ing in ingredients if ing.id in selection]
         else        : displayIngredients = ingredients
 
-        grid = flet.GridView(
-            controls=[ing.GetItemView() for ing in displayIngredients],
-            runs_count=3,
-            expand=1,
+        return flet.Column(
+            controls = [
+                flet.Button(
+                    "Add Ingredient",
+                    on_click=lambda e: print("Add Ingredient clicked!")
+                ),
+                flet.GridView(
+                    controls=[ing.GetItemView() for ing in displayIngredients],
+                    runs_count=3,
+                    expand=1,
+                ),
+            ],
         )
-        
-        return grid
 
     def GetItemView(self) -> flet.Container:
         return flet.Container(

@@ -36,13 +36,19 @@ class Recipe:
     @staticmethod
     def GetListView() -> flet.View:
 
-        grid = flet.GridView(
-            controls= [r.GetItemView() for r in DataSource.DataSource.GetRecipes()],
-            runs_count = 3,
-            expand=1,
+        return flet.Column(
+            controls = [
+                flet.Button(
+                    "Create Recipe",
+                    on_click=lambda e: print("Create Recipe clicked!")
+                ),
+                flet.GridView(
+                    controls= [r.GetItemView() for r in DataSource.DataSource.GetRecipes()],
+                    runs_count = 3,
+                    expand=1,
+                ),
+            ],
         )
-        
-        return grid
     
     def GetItemView(self) -> flet.Container:
         return flet.Container(
