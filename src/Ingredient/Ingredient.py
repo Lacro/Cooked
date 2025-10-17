@@ -20,25 +20,30 @@ class Ingredient:
         )
     
     @staticmethod
-    def GetListView(selection:list[int] = []) -> flet.View:
+    def GetListView(selection:list[int] = [], withAddButton:bool=False) -> flet.View:
+        # todo: optimisation
         ingredients = DataSource.DataSource.GetIngredients()
-
         if selection: displayIngredients = [ing for ing in ingredients if ing.id in selection]
         else        : displayIngredients = ingredients
 
-        return flet.Column(
-            controls = [
+        constrols = []
+
+        if withAddButton:
+            constrols.append(
                 flet.Button(
-                    "Add Ingredient",
+                    "Add New Ingredient",
                     on_click=lambda e: print("Add Ingredient clicked!")
-                ),
-                flet.GridView(
-                    controls=[ing.GetItemView() for ing in displayIngredients],
-                    runs_count=3,
-                    expand=1,
-                ),
-            ],
+            ))
+
+        constrols.append(
+            flet.GridView(
+                controls=[ing.GetItemView() for ing in displayIngredients],
+                runs_count=3,
+                expand=1,
+            ),
         )
+
+        return flet.Column(controls = constrols)
 
     def GetItemView(self) -> flet.Container:
         return flet.Container(

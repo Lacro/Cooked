@@ -6,36 +6,41 @@ import Ingredient.Ingredient as Ingredient
 
 class Recipe:
     def __init__(self, id: int, name: str, items:list[int]=[]):
-        self.id = id
-        self.name = name
-        self.items = items
+        self.id:int = id
+        self.name:str = name
+        self.items:Ingredient = items
 
     def GetView(self) -> flet.Column:
-        return flet.Column([
-            flet.Container(
-                content=flet.Text(
-                    self.name,
+        return flet.Column(controls = [
+                flet.Row(controls = [
+                        flet.Button(
+                            "Modify",
+                            on_click=lambda e: print("Add Ingredient clicked!")
+                        ),
+                        flet.Container(
+                            content=flet.Text(
+                                self.name,
+                                color=AppColors.AppColors.RecipeItemViewFontColor,
+                            ),
+                            bgcolor=AppColors.AppColors.IngredientItemViewBackground,
+                            alignment=flet.alignment.center,
+                        ),
+                    ]),
+                flet.Text(
+                    "Ingredients :",
                     color=AppColors.AppColors.RecipeItemViewFontColor,
+                    bgcolor=AppColors.AppColors.IngredientItemViewBackground,
                 ),
-                bgcolor=AppColors.AppColors.IngredientItemViewBackground,
-                alignment=flet.alignment.center,
-            ),
-            flet.Text(
-                "Ingredients :",
-                color=AppColors.AppColors.RecipeItemViewFontColor,
-                bgcolor=AppColors.AppColors.IngredientItemViewBackground,
-            ),
-            Ingredient.Ingredient.GetListView(self.items),
-            flet.Text(
-                "Steps :",
-                color=AppColors.AppColors.RecipeItemViewFontColor,
-                bgcolor=AppColors.AppColors.IngredientItemViewBackground,
-            ),
-        ])
+                Ingredient.Ingredient.GetListView(self.items),
+                flet.Text(
+                    "Steps :",
+                    color=AppColors.AppColors.RecipeItemViewFontColor,
+                    bgcolor=AppColors.AppColors.IngredientItemViewBackground,
+                ),
+            ])
 
     @staticmethod
     def GetListView() -> flet.View:
-
         return flet.Column(
             controls = [
                 flet.Button(

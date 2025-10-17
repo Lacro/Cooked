@@ -1,14 +1,20 @@
 import flet
-import Recipe.Recipe as Recipe
 import DataSource.DataSource as DB
+import Settings.Parameters as Parameters
+import Recipe.Recipe as Recipe
+import Ingredient.Ingredient as Ingredient
 from flet import TemplateRoute
 
 class Rout:
     page: flet.Page = None
+    template_route: TemplateRoute = None
+
     HomeRecipesRoute: str = "/Recipes"
     HomeShoppingRoute: str = "/Shopping"
     HomeParamsRoute: str = "/Params"
-    template_route: TemplateRoute = None
+
+    PageIngredientRoute: str = "/Ingredients"
+
 
     @staticmethod
     def SetPage(page: flet.Page):
@@ -42,7 +48,6 @@ class Rout:
             if Rout.RouteIsLike("/") or Rout.RouteIsLike(Rout.HomeRecipesRoute):
                 Rout.page.views.clear()
                 curent_view = Recipe.Recipe.GetListView()
-
             elif Rout.RouteIsLike("/Recipes/:id") and hasattr(Rout.template_route, 'id'):
                 print(f"Matched recipe route with id: {Rout.template_route.id}")
                 recipe = DB.DataSource.GetRecipeByID(int(Rout.template_route.id))
@@ -51,6 +56,8 @@ class Rout:
                 else:
                     curent_view = flet.Text(f"Recipe {Rout.template_route.id} not found")
 
+            elif Rout.RouteIsLike(Rout.PageIngredientRoute):
+                curent_view = Ingredient.Ingredient.GetListView(withAddButton=True)
             elif Rout.RouteIsLike("/Ingredients/:id") and hasattr(Rout.template_route, 'id'):
                 print(f"Matched ingredient route with id: {Rout.template_route.id}")
                 ingredient = DB.DataSource.GetIngredientByID(int(Rout.template_route.id))
@@ -65,7 +72,7 @@ class Rout:
 
             elif Rout.RouteIsLike(Rout.HomeParamsRoute):
                 Rout.page.views.clear()
-                curent_view = flet.Text("Params")
+                curent_view = Parameters.Parameters.GetView()
                 
             Rout.page.views.append(
                 flet.View(
@@ -89,7 +96,6 @@ class Rout:
                                 ),
                             ],
                         ),
-                        flet.Text(f"Route: {e.route}"),
                         curent_view,
                         navigationBar,
                     ],
