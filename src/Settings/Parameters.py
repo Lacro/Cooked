@@ -9,7 +9,7 @@ class Parameters:
                 flet.Text("Params View"),
                 flet.Button(
                     "Edit ingredients",
-                    on_click=lambda e: Rout.Rout.Go(Rout.Rout.PageIngredientRoute)
+                    on_click=lambda e: Rout.Rout.Go(Rout.Rout.RouteAllIngredient)
                 )
             ]
         )

@@ -5,7 +5,8 @@ import Recipe.Recipe as Recipe
 import Ingredient.Ingredient as Ingredient
 
 class DataSource:
-    # ============= Recipes =============
+    # ============================================================
+    # ========================= Recipes ==========================
     recipes = []
     @staticmethod
     def GetRecipes() -> list[Recipe.Recipe]:
@@ -21,15 +22,21 @@ class DataSource:
             if recipe.id == id:
                 return recipe
         return None
+    # ========================= Recipes ==========================
+    # ============================================================
 
-    # ============= Ingredients =============
+
+    # ============================================================
+    # ======================== Ingredient ========================
     ingredients = []
     @staticmethod
-    def GetIngredients() -> list[Ingredient.Ingredient]:
+    def GetIngredients(selection:list[int] = []) -> list[Ingredient.Ingredient]:
         if not DataSource.ingredients:
             DataSource.ingredients = LoadData.LoadIngredients()
-
-        return DataSource.ingredients
+        
+        # todo: optimisation
+        if selection: return [ing for ing in DataSource.ingredients if ing.id in selection]
+        else        : return DataSource.ingredients
     
     @staticmethod
     def GetIngredientByID(id: int) -> Ingredient.Ingredient | None:
@@ -40,6 +47,20 @@ class DataSource:
         return None
     
     @staticmethod
-    def AddIngredient(ingredient: Ingredient):
+    def AddIngredient(ingredient: Ingredient) -> bool:
+        if not ingredient.id:
+            ingredient.id = DataSource.GetNewIngredientId()
+        
         if ingredient not in DataSource.ingredients:
             DataSource.ingredients.append(ingredient)
+        
+        return True
+    
+    @staticmethod
+    def GetNewIngredientId() -> int:
+        # Generate a new ID (simple increment based on existing IDs)
+        # todo : data persistence and more robust ID generation
+        existing_ids = [ing.id for ing in DataSource.GetIngredients()]
+        return max(existing_ids) + 1 if existing_ids else 1
+    # ======================== Ingredient ========================
+    # ============================================================

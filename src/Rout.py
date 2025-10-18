@@ -9,11 +9,12 @@ class Rout:
     page: flet.Page = None
     template_route: TemplateRoute = None
 
-    HomeRecipesRoute: str = "/Recipes"
-    HomeShoppingRoute: str = "/Shopping"
+    RouteAllRecipe: str = "/Recipes"
+    RouteShoppingList: str = "/Shopping"
     HomeParamsRoute: str = "/Params"
 
-    PageIngredientRoute: str = "/Ingredients"
+    RouteAllIngredient: str = "/Ingredients"
+    RouteCreateIngredient: str = "/Ingredients/New"
 
 
     @staticmethod
@@ -45,7 +46,9 @@ class Rout:
 
             curent_view = flet.Text(f"404: Page not Found : {e.route}")
 
-            if Rout.RouteIsLike("/") or Rout.RouteIsLike(Rout.HomeRecipesRoute):
+            # ============================================================
+            # ========================= Recipes ==========================
+            if Rout.RouteIsLike("/") or Rout.RouteIsLike(Rout.RouteAllRecipe):
                 Rout.page.views.clear()
                 curent_view = Recipe.Recipe.GetListView()
             elif Rout.RouteIsLike("/Recipes/:id") and hasattr(Rout.template_route, 'id'):
@@ -55,9 +58,16 @@ class Rout:
                     curent_view = recipe.GetView()
                 else:
                     curent_view = flet.Text(f"Recipe {Rout.template_route.id} not found")
+            # ========================= Recipes ==========================
+            # ============================================================
 
-            elif Rout.RouteIsLike(Rout.PageIngredientRoute):
+
+            # ============================================================
+            # ======================== Ingredient ========================
+            elif Rout.RouteIsLike(Rout.RouteAllIngredient):
                 curent_view = Ingredient.Ingredient.GetListView(withAddButton=True)
+            elif Rout.RouteIsLike(Rout.RouteCreateIngredient):
+                curent_view = Ingredient.Ingredient.GetCreationView()
             elif Rout.RouteIsLike("/Ingredients/:id") and hasattr(Rout.template_route, 'id'):
                 print(f"Matched ingredient route with id: {Rout.template_route.id}")
                 ingredient = DB.DataSource.GetIngredientByID(int(Rout.template_route.id))
@@ -65,14 +75,26 @@ class Rout:
                     curent_view = ingredient.GetView()
                 else:
                     curent_view = flet.Text(f"Ingredient {Rout.template_route.id} not found")
+            # ======================== Ingredient ========================
+            # ============================================================
 
-            elif Rout.RouteIsLike(Rout.HomeShoppingRoute):
+
+            # ============================================================
+            # ========================= Shopping =========================
+            elif Rout.RouteIsLike(Rout.RouteShoppingList):
                 Rout.page.views.clear()
                 curent_view = flet.Text("Shopping")
+            # ========================= Shopping =========================
+            # ============================================================
 
+
+            # ============================================================
+            # ======================== Parameters ========================
             elif Rout.RouteIsLike(Rout.HomeParamsRoute):
                 Rout.page.views.clear()
                 curent_view = Parameters.Parameters.GetView()
+            # ======================== Parameters ========================
+            # ============================================================
                 
             Rout.page.views.append(
                 flet.View(
@@ -126,12 +148,12 @@ class Rout:
             flet.NavigationBarDestination(
                 icon=flet.Icons.FOOD_BANK,
                 label="Recipes",
-                data=Rout.HomeRecipesRoute,
+                data=Rout.RouteAllRecipe,
             ),
             flet.NavigationBarDestination(
                 icon=flet.Icons.SHOPPING_CART,
                 label="Shopping",
-                data=Rout.HomeShoppingRoute,
+                data=Rout.RouteShoppingList,
             ),
             flet.NavigationBarDestination(
                 icon=flet.Icons.SETTINGS,
