@@ -1,9 +1,9 @@
 import flet
-import DataSource.DataSource as DB
-import Settings.Parameters as Parameters
-import Recipe.Recipe as Recipe
-import Ingredient.Ingredient as Ingredient
 from flet import TemplateRoute
+import Views.ParametersViews as ParametersViews
+import Views.ShoppingViews as ShoppingViews
+import Views.RecipeViews as RecipeViews
+import Views.IngredientViews as IngredientViews
 
 class Rout:
     page: flet.Page = None
@@ -50,14 +50,10 @@ class Rout:
             # ========================= Recipes ==========================
             if Rout.RouteIsLike("/") or Rout.RouteIsLike(Rout.RouteAllRecipe):
                 Rout.page.views.clear()
-                curent_view = Recipe.Recipe.GetListView()
+                curent_view = RecipeViews.RecipeListView()
             elif Rout.RouteIsLike("/Recipes/:id") and hasattr(Rout.template_route, 'id'):
                 print(f"Matched recipe route with id: {Rout.template_route.id}")
-                recipe = DB.DataSource.GetRecipeByID(int(Rout.template_route.id))
-                if recipe:
-                    curent_view = recipe.GetView()
-                else:
-                    curent_view = flet.Text(f"Recipe {Rout.template_route.id} not found")
+                curent_view = RecipeViews.RecipeViewByID(int(Rout.template_route.id))
             # ========================= Recipes ==========================
             # ============================================================
 
@@ -65,16 +61,12 @@ class Rout:
             # ============================================================
             # ======================== Ingredient ========================
             elif Rout.RouteIsLike(Rout.RouteAllIngredient):
-                curent_view = Ingredient.Ingredient.GetListView(withAddButton=True)
+                curent_view = IngredientViews.IngredientListView(withAddButton=True)
             elif Rout.RouteIsLike(Rout.RouteCreateIngredient):
-                curent_view = Ingredient.Ingredient.GetCreationView()
+                curent_view = IngredientViews.CreateIngredientView()
             elif Rout.RouteIsLike("/Ingredients/:id") and hasattr(Rout.template_route, 'id'):
                 print(f"Matched ingredient route with id: {Rout.template_route.id}")
-                ingredient = DB.DataSource.GetIngredientByID(int(Rout.template_route.id))
-                if ingredient:
-                    curent_view = ingredient.GetView()
-                else:
-                    curent_view = flet.Text(f"Ingredient {Rout.template_route.id} not found")
+                curent_view = IngredientViews.IngredientViewByID(int(Rout.template_route.id))
             # ======================== Ingredient ========================
             # ============================================================
 
@@ -83,7 +75,7 @@ class Rout:
             # ========================= Shopping =========================
             elif Rout.RouteIsLike(Rout.RouteShoppingList):
                 Rout.page.views.clear()
-                curent_view = flet.Text("Shopping")
+                curent_view = ShoppingViews.ShoppingListView()
             # ========================= Shopping =========================
             # ============================================================
 
@@ -92,7 +84,7 @@ class Rout:
             # ======================== Parameters ========================
             elif Rout.RouteIsLike(Rout.HomeParamsRoute):
                 Rout.page.views.clear()
-                curent_view = Parameters.Parameters.GetView()
+                curent_view = ParametersViews.ParmatersView()
             # ======================== Parameters ========================
             # ============================================================
                 
