@@ -22,3 +22,11 @@ class AppColors:
     # Ingredient Item View
     IngredientItemViewBackground = PrimaryColor
     IngredientItemViewFontColor = FontColor
+
+    # ============= Shopping list =============
+    # Shopping list View
+    ShoppingListBackGround = PrimaryBackGround
+
+    # Shopping list View
+    ShoppingItemViewBackground = PrimaryColor
+    ShoppingItemViewFontColor = FontColor

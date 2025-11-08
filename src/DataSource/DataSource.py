@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import DataSource.LoadData as LoadData
-import Recipe.Recipe as Recipe
-import Ingredient.Ingredient as Ingredient
+import Objects.Item as Item
+import Objects.Recipe as Recipe
+import Objects.Ingredient as Ingredient
 
 class DataSource:
     # ============================================================
@@ -63,4 +64,18 @@ class DataSource:
         existing_ids = [ing.id for ing in DataSource.GetIngredients()]
         return max(existing_ids) + 1 if existing_ids else 1
     # ======================== Ingredient ========================
+    # ============================================================
+
+
+    # ============================================================
+    # ========================= Shopping =========================
+    shoppingList = []
+    @staticmethod
+    def GetShoppingList() -> list[Item.Item]:
+        if not DataSource.shoppingList:
+            DataSource.shoppingList = LoadData.LoadShoppingList()
+        
+        return DataSource.shoppingList
+
+    # ========================= Shopping =========================
     # ============================================================

@@ -2,7 +2,7 @@ import flet
 import Rout
 import DataSource.DataSource as DB
 import Settings.Colors as AppColors
-import Ingredient.Ingredient as Ingredient
+import Objects.Ingredient as Ingredient
 import DataSource.DataSource as DataSource
 
 def IngredientViewByID(ingredientID:int) -> flet.Container:
@@ -46,14 +46,22 @@ def IngredientListView(selection:list[int] = [], withAddButton:bool=False) -> fl
         ))
 
     constrols.append(
-        flet.GridView(
-            controls=[IngredientListItemView(ing) for ing in DataSource.DataSource.GetIngredients(selection)],
-            runs_count=3,
-            expand=1,
+        flet.Column(
+            controls=[
+                flet.GridView(
+                    controls=[IngredientListItemView(ing) for ing in DataSource.DataSource.GetIngredients(selection)],
+                    runs_count=3,
+                    expand=True,
+                ),
+            ],
         ),
     )
 
-    return flet.Column(controls = constrols)
+    return flet.Column(
+            controls = constrols,
+            expand=True,
+            scroll=flet.ScrollMode.AUTO,
+        )
 
 def CreateIngredientView() -> flet.Container:
     inputName = flet.TextField(label="Ingredient Name")

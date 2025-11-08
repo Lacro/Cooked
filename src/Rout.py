@@ -87,7 +87,7 @@ class Rout:
                 curent_view = ParametersViews.ParmatersView()
             # ======================== Parameters ========================
             # ============================================================
-                
+            
             Rout.page.views.append(
                 flet.View(
                     route=e.route,
@@ -95,17 +95,14 @@ class Rout:
                         flet.Container(height = 20), # spacer to avoid front camera inside display
                         flet.Row(
                             controls=[
-                                flet.Button(
-                                    "Back",
-                                    on_click=Rout.GoBack
-                                ),
+                                flet.Button("Back", on_click=Rout.GoBack),
                                 flet.Container(
                                     flet.Text(
                                         f"COOKED",
                                         style=flet.TextThemeStyle.HEADLINE_MEDIUM,
                                         text_align=flet.TextAlign.CENTER,
                                     ),
-                                    expand=1,
+                                    expand=True,
                                     alignment=flet.alignment.center,
                                 ),
                             ],
@@ -120,7 +117,6 @@ class Rout:
             print(f"Added page, new stack:")
             for i, v in enumerate(Rout.page.views):
                 print(f" {i}: \"{v.route}\"")
-
 
         return on_rout_change
 

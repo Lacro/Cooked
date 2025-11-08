@@ -9,5 +9,7 @@ def ParmatersView() -> flet.View:
                 "Edit ingredients",
                 on_click=lambda e: Rout.Rout.Go(Rout.Rout.RouteAllIngredient)
             )
-        ]
+        ],
+        expand=True,
+        scroll=flet.ScrollMode.AUTO,
     )

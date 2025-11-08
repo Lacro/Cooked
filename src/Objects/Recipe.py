@@ -1,4 +1,4 @@
-import Ingredient.Ingredient as Ingredient
+import Objects.Ingredient as Ingredient
 
 class Recipe:
     def __init__(self, id: int, name: str, items:list[int]=[]):

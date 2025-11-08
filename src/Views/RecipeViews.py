@@ -3,7 +3,7 @@ import Rout as Rout
 import DataSource.DataSource as DB
 import DataSource.DataSource as DataSource
 import Settings.Colors as AppColors
-import Recipe.Recipe as Recipe
+import Objects.Recipe as Recipe
 import Views.IngredientViews as IngredientViews
 
 def RecipeViewByID(recipeID:int) -> flet.Column:
@@ -65,8 +65,9 @@ def RecipeListView() -> flet.View:
             flet.GridView(
                 controls= [RecipeListItemView(r) for r in DataSource.DataSource.GetRecipes()],
                 runs_count = 3,
-                expand=1,
             ),
         ],
+        expand=True,
+        scroll=flet.ScrollMode.AUTO,
     )
 

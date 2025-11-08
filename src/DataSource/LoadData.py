@@ -1,5 +1,6 @@
-import Recipe.Recipe as Recipe
-import Ingredient.Ingredient as Ingredient
+import Objects.Recipe as Recipe
+import Objects.Ingredient as Ingredient
+import Objects.Item as Item
 
 def LoadRecipes():
     return [
@@ -40,4 +41,11 @@ def LoadIngredients():
         Ingredient.Ingredient(11, "Riz"),
         Ingredient.Ingredient(12, "Poulet"),
         Ingredient.Ingredient(13, "Boeuf"),
+    ]
+
+def LoadShoppingList():
+    return [
+        Item.Item(1, 2, "Gram"),
+        Item.Item(2, 3, "Gram"),
+        Item.Item(3, 1, "Liter"),
     ]
