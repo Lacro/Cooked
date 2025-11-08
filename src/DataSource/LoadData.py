@@ -1,51 +1,54 @@
 import Objects.Recipe as Recipe
 import Objects.Ingredient as Ingredient
 import Objects.Item as Item
+import DataSource.DataBaseInfo as DBInfo
+from supabase import create_client, Client
+
+supabase: Client = create_client(DBInfo.SUPABASE_URL, DBInfo.SUPABASE_KEY)
 
 def LoadRecipes():
+    response = (
+        supabase.table(DBInfo.TABLE_RECIPES)
+        .select("*")
+        .execute()
+    )
+
     return [
-        Recipe.Recipe(1, "Spaghetti Bolognese", [10, 5, 6, 1, 2]),
-        Recipe.Recipe(2, "Chicken Curry", [1, 2, 5, 12]),
-        Recipe.Recipe(3, "Beef Stroganoff", [1, 2, 5, 12]),
-        Recipe.Recipe(4, "Vegetable Stir Fry"),
-        Recipe.Recipe(5, "Fish Tacos"),
-        Recipe.Recipe(6, "Lentil Soup"),
-        Recipe.Recipe(7, "Caesar Salad"),
-        Recipe.Recipe(8, "Pancakes"),
-        Recipe.Recipe(9, "Grilled Cheese Sandwich"),
-        Recipe.Recipe(10, "Chocolate Brownies"),
-        Recipe.Recipe(11, "Cookies"),
-        Recipe.Recipe(12, "Roast Chicken"),
-        Recipe.Recipe(13, "Mashed Potatoes"),
-        Recipe.Recipe(14, "Steak and Eggs"),
-        Recipe.Recipe(15, "Shrimp Scampi"),
-        Recipe.Recipe(16, "Quiche Lorraine"),
-        Recipe.Recipe(17, "Tuna Salad"),
-        Recipe.Recipe(18, "BLT Sandwich"),
-        Recipe.Recipe(19, "French Toast"),
-        Recipe.Recipe(20, "Apple Pie"),
+        Recipe.Recipe(
+            elt[DBInfo.TABLE_RECIPES_ID],
+            elt[DBInfo.TABLE_RECIPES_NAME],
+        )
+        for elt in response.data
     ]
 
 def LoadIngredients():
+    
+    response = (
+        supabase.table(DBInfo.TABLE_INGREDIENTS)
+        .select("*")
+        .execute()
+    )
+
     return [
-        Ingredient.Ingredient(1, "Sel"),
-        Ingredient.Ingredient(2, "Poivre"),
-        Ingredient.Ingredient(3, "Huile d'olive"),
-        Ingredient.Ingredient(4, "Beurre"),
-        Ingredient.Ingredient(5, "Ail"),
-        Ingredient.Ingredient(6, "Oignon"),
-        Ingredient.Ingredient(7, "Tomate"),
-        Ingredient.Ingredient(8, "Basilic"),
-        Ingredient.Ingredient(9, "Parmesan"),
-        Ingredient.Ingredient(10, "Spaghetti"),
-        Ingredient.Ingredient(11, "Riz"),
-        Ingredient.Ingredient(12, "Poulet"),
-        Ingredient.Ingredient(13, "Boeuf"),
+        Ingredient.Ingredient(
+            elt[DBInfo.TABLE_INGREDIENTS_ID],
+            elt[DBInfo.TABLE_INGREDIENTS_NAME],
+        )
+        for elt in response.data
     ]
 
 def LoadShoppingList():
+    response = (
+        supabase.table(DBInfo.TABLE_SHOPPING_LIST)
+        .select("*")
+        .execute()
+    )
+
     return [
-        Item.Item(1, 2, "Gram"),
-        Item.Item(2, 3, "Gram"),
-        Item.Item(3, 1, "Liter"),
+        Item.Item(
+            elt[DBInfo.TABLE_SHOPPING_LIST_INGREDIENT_ID],
+            elt[DBInfo.TABLE_SHOPPING_LIST_QUANTITY],
+            elt[DBInfo.TABLE_SHOPPING_LIST_UNIT]
+        )
+        for elt in response.data
     ]
