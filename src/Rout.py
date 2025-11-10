@@ -32,16 +32,13 @@ class Rout:
     
     @staticmethod
     def RouteIsLike(route: str) -> bool:
-        ret:bool = Rout.template_route.match(route)
-        print(f"Matching route \"{Rout.page.route}\" with template \"{route}\" -> {ret}")
-        return ret
+        return Rout.template_route.match(route)
 
     @staticmethod
     def get_router():
         navigationBar = Rout.get_navigation_bar()
 
         def on_rout_change(e: flet.RouteChangeEvent):
-            print(f"Route changed to: {e}")
             Rout.template_route.route = e.route # update the route in the template route module
 
             curent_view = flet.Text(f"404: Page not Found : {e.route}")
@@ -52,7 +49,6 @@ class Rout:
                 Rout.page.views.clear()
                 curent_view = RecipeViews.RecipeListView()
             elif Rout.RouteIsLike("/Recipes/:id") and hasattr(Rout.template_route, 'id'):
-                print(f"Matched recipe route with id: {Rout.template_route.id}")
                 curent_view = RecipeViews.RecipeViewByID(int(Rout.template_route.id))
             # ========================= Recipes ==========================
             # ============================================================
@@ -65,7 +61,6 @@ class Rout:
             elif Rout.RouteIsLike(Rout.RouteCreateIngredient):
                 curent_view = IngredientViews.CreateIngredientView()
             elif Rout.RouteIsLike("/Ingredients/:id") and hasattr(Rout.template_route, 'id'):
-                print(f"Matched ingredient route with id: {Rout.template_route.id}")
                 curent_view = IngredientViews.IngredientViewByID(int(Rout.template_route.id))
             # ======================== Ingredient ========================
             # ============================================================
@@ -113,12 +108,14 @@ class Rout:
                 )
             )
             Rout.page.update()
-        
-            print(f"Added page, new stack:")
-            for i, v in enumerate(Rout.page.views):
-                print(f" {i}: \"{v.route}\"")
 
-        return on_rout_change
+        def on_rout_change_safe(e: flet.RouteChangeEvent):
+            try:
+                on_rout_change(e)
+            except Exception as ex:
+                print(f"Error on routing {e.route}: {ex}")
+
+        return on_rout_change_safe
 
     @staticmethod
     def get_poper():

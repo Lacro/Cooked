@@ -1,5 +1,6 @@
 import flet
 import Rout
+from Views.Utils import UserActionSafe
 import DataSource.DataSource as DB
 import Settings.Colors as AppColors
 import Objects.Ingredient as Ingredient
@@ -78,5 +79,8 @@ def CreateIngredientView() -> flet.Container:
                 alignment=flet.alignment.center,
             ),
             inputName,
-            flet.ElevatedButton("Create", on_click=lambda e: Ingredient.Ingredient.CreateIngredient(inputName.value)),
+            flet.ElevatedButton(
+                "Create",
+                on_click=lambda e: UserActionSafe(Ingredient.Ingredient.CreateIngredient, [inputName.value])
+            ),
     ])

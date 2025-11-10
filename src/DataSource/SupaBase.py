@@ -37,6 +37,14 @@ def LoadIngredients():
         for elt in response.data
     ]
 
+def AddIngredient(ingredient):
+    (
+        supabase.table(DBInfo.TABLE_INGREDIENTS)
+            .insert({ DBInfo.TABLE_INGREDIENTS_NAME: ingredient.name })
+            .execute()
+    )
+
+
 def LoadShoppingList():
     response = (
         supabase.table(DBInfo.TABLE_SHOPPING_LIST)

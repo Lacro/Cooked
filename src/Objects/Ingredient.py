@@ -6,11 +6,14 @@ class Ingredient:
         self.name = name
     
     @staticmethod
-    def CreateIngredient(name: str) -> bool:
-        if (not name) or (name.strip() == ""):
-            print("Ingredient name cannot be empty")
-            return False
+    def CreateIngredient(name: str):
+        if not name:
+            raise ValueError("Ingredient name cannot be None or empty")
         
-        new_ingredient = Ingredient(name=name.strip())
+        name=name.strip()
 
-        return DataSource.DataSource.AddIngredient(new_ingredient)
+        if not name:
+            raise ValueError("Ingredient name cannot be only whitespace")
+        
+        DataSource.DataSource.AddIngredient(Ingredient(name=name))
+

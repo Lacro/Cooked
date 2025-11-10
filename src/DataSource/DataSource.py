@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import DataSource.LoadData as LoadData
+import DataSource.SupaBase as SupaBase
 import Objects.Item as Item
 import Objects.Recipe as Recipe
 import Objects.Ingredient as Ingredient
@@ -12,7 +12,7 @@ class DataSource:
     @staticmethod
     def GetRecipes() -> list[Recipe.Recipe]:
         if not DataSource.recipes:
-            DataSource.recipes = LoadData.LoadRecipes()
+            DataSource.recipes = SupaBase.LoadRecipes()
 
         return DataSource.recipes
     
@@ -33,7 +33,7 @@ class DataSource:
     @staticmethod
     def GetIngredients(selection:list[int] = []) -> list[Ingredient.Ingredient]:
         if not DataSource.ingredients:
-            DataSource.ingredients = LoadData.LoadIngredients()
+            DataSource.ingredients = SupaBase.LoadIngredients()
         
         # todo: optimisation
         if selection: return [ing for ing in DataSource.ingredients if ing.id in selection]
@@ -48,14 +48,8 @@ class DataSource:
         return None
     
     @staticmethod
-    def AddIngredient(ingredient: Ingredient) -> bool:
-        if not ingredient.id:
-            ingredient.id = DataSource.GetNewIngredientId()
-        
-        if ingredient not in DataSource.ingredients:
-            DataSource.ingredients.append(ingredient)
-        
-        return True
+    def AddIngredient(ingredient: Ingredient):
+        SupaBase.AddIngredient(ingredient)
     
     @staticmethod
     def GetNewIngredientId() -> int:
@@ -73,7 +67,7 @@ class DataSource:
     @staticmethod
     def GetShoppingList() -> list[Item.Item]:
         if not DataSource.shoppingList:
-            DataSource.shoppingList = LoadData.LoadShoppingList()
+            DataSource.shoppingList = SupaBase.LoadShoppingList()
         
         return DataSource.shoppingList
 
