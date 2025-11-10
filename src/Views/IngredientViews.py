@@ -81,6 +81,10 @@ def CreateIngredientView() -> flet.Container:
             inputName,
             flet.ElevatedButton(
                 "Create",
-                on_click=lambda e: UserActionSafe(Ingredient.Ingredient.CreateIngredient, [inputName.value])
+                on_click=lambda e: UserActionSafe(
+                    action=Ingredient.Ingredient.CreateIngredient,
+                    parameters=[inputName.value],
+                    on_success=Rout.Rout.GoBack
+                )
             ),
     ])

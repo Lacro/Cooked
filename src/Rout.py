@@ -28,8 +28,7 @@ class Rout:
         Rout.page.on_view_pop = Rout.get_poper()
         Rout.page.go(page.route)
         Rout.Go = Rout.page.go # easier access to the page.go method
-        Rout.GoBack = Rout.page.on_view_pop # easier access to the page.on_view_pop method
-    
+
     @staticmethod
     def RouteIsLike(route: str) -> bool:
         return Rout.template_route.match(route)
@@ -116,6 +115,9 @@ class Rout:
                 print(f"Error on routing {e.route}: {ex}")
 
         return on_rout_change_safe
+
+    @staticmethod
+    def GoBack(page=None): Rout.page.on_view_pop(Rout.page)
 
     @staticmethod
     def get_poper():
