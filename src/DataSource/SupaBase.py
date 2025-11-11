@@ -2,9 +2,13 @@ import Objects.Recipe as Recipe
 import Objects.Ingredient as Ingredient
 import Objects.Item as Item
 import DataSource.DataBaseInfo as DBInfo
+import DataSource.DataBaseSecrets as DataBaseSecrets
 from supabase import create_client, Client
 
-supabase: Client = create_client(DBInfo.SUPABASE_URL, DBInfo.SUPABASE_KEY)
+supabase: Client = create_client(
+    DataBaseSecrets.SUPABASE_URL,
+    DataBaseSecrets.SUPABASE_KEY,
+)
 
 def LoadRecipes():
     response = (
