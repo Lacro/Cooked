@@ -35,8 +35,10 @@ def LoadIngredients():
 
     return [
         Ingredient.Ingredient(
-            elt[DBInfo.TABLE_INGREDIENTS_ID],
-            elt[DBInfo.TABLE_INGREDIENTS_NAME],
+            id               = elt[DBInfo.TABLE_INGREDIENTS_ID],
+            name             = elt[DBInfo.TABLE_INGREDIENTS_NAME],
+            default_quantity = elt[DBInfo.TABLE_INGREDIENTS_DEFAULT_QUANTITY],
+            default_unit     = elt[DBInfo.TABLE_INGREDIENTS_DEFAULT_UNIT],
         )
         for elt in response.data
     ]
@@ -44,7 +46,11 @@ def LoadIngredients():
 def AddIngredient(ingredient):
     (
         supabase.table(DBInfo.TABLE_INGREDIENTS)
-            .insert({ DBInfo.TABLE_INGREDIENTS_NAME: ingredient.name })
+            .insert({
+                DBInfo.TABLE_INGREDIENTS_NAME:              ingredient.name,
+                DBInfo.TABLE_INGREDIENTS_DEFAULT_QUANTITY:  ingredient.quantity,
+                DBInfo.TABLE_INGREDIENTS_DEFAULT_UNIT:      ingredient.unit,
+            })
             .execute()
     )
 
@@ -64,3 +70,14 @@ def LoadShoppingList():
         )
         for elt in response.data
     ]
+
+def AddItemToShoppingList(item: Item.Item):
+    (
+        supabase.table(DBInfo.TABLE_SHOPPING_LIST)
+            .insert({
+                DBInfo.TABLE_SHOPPING_LIST_INGREDIENT_ID:   item.ingredient_id,
+                DBInfo.TABLE_SHOPPING_LIST_QUANTITY:        item.quantity,
+                DBInfo.TABLE_SHOPPING_LIST_UNIT:            item.unit,
+            })
+            .execute()
+    )

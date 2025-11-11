@@ -71,5 +71,8 @@ class DataSource:
         
         return DataSource.shoppingList
 
+    @staticmethod
+    def AddItemToShoppingList(item: Item.Item):
+        SupaBase.AddItemToShoppingList(item)
     # ========================= Shopping =========================
     # ============================================================

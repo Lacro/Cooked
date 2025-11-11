@@ -5,9 +5,11 @@ TABLE_RECIPES_NAME  = 'name'
 
 
 #=================== Ingredients ===================
-TABLE_INGREDIENTS       = 'ingredients'
-TABLE_INGREDIENTS_ID    = 'id'
-TABLE_INGREDIENTS_NAME  = 'name'
+TABLE_INGREDIENTS                   = 'ingredients'
+TABLE_INGREDIENTS_ID                = 'id'
+TABLE_INGREDIENTS_NAME              = 'name'
+TABLE_INGREDIENTS_DEFAULT_QUANTITY  = 'default_quantity'
+TABLE_INGREDIENTS_DEFAULT_UNIT      = 'default_unit'
 
 
 #================== Shopping list ==================

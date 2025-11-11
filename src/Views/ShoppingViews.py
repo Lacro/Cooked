@@ -1,5 +1,7 @@
 import flet as flet
+import MyFletConstrols.MySearchBar as MySearchBar
 import Objects.Item as Item
+import UserActions.ShoppingListActions as ShoppingListActions
 import DataSource.DataSource as DataSource
 import Settings.Colors as AppColors
 
@@ -17,14 +19,10 @@ def ShoppingListView() -> flet.View:
             bgcolor=AppColors.AppColors.ShoppingItemViewBackground,
             alignment=flet.alignment.center,
         )
-
-
+    
     return flet.Column(
         controls=[
-            flet.Button(
-                "Add item",
-                on_click=lambda e: print("Add item clicked!")
-            ),
+            MySearchBar.IngredientSearchBar(on_selection=lambda e: ShoppingListActions.AddItemToShoppingList(e.control.data)),
             flet.Text("Shopping list View"),
             flet.GridView(
                 controls= [ShoppingListItemView(item) for item in DataSource.DataSource.GetShoppingList()],

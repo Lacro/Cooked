@@ -1,13 +1,13 @@
 import flet
 import Views.Rout as Rout
-import Views.UserActions as UserActions
+import UserActions.IngredientActions as IngredientActions
 import DataSource.DataSource as DB
 import Settings.Colors as AppColors
 import Objects.Ingredient as Ingredient
 import DataSource.DataSource as DataSource
 
-def IngredientViewByID(ingredientID:int) -> flet.Container:
-    ingredient = DB.DataSource.GetIngredientByID(ingredientID)
+def IngredientViewByID(ingredient_id:int) -> flet.Container:
+    ingredient = DB.DataSource.GetIngredientByID(ingredient_id)
 
     if not ingredient:
         return flet.Text(f"Ingredient {Rout.template_route.id} not found")
@@ -79,5 +79,5 @@ def CreateIngredientView() -> flet.Container:
                 alignment=flet.alignment.center,
             ),
             inputName,
-            flet.ElevatedButton("Create", on_click=lambda e: UserActions.CreateIngredient(inputName.value)),
+            flet.ElevatedButton("Create", on_click=lambda e: IngredientActions.CreateIngredient(inputName.value)),
     ])
