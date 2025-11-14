@@ -4,6 +4,7 @@ import Views.ParametersViews as ParametersViews
 import Views.ShoppingViews as ShoppingViews
 import Views.RecipeViews as RecipeViews
 import Views.IngredientViews as IngredientViews
+from Utils import LogError
 
 class Rout:
     page: flet.Page = None
@@ -15,7 +16,6 @@ class Rout:
 
     RouteAllIngredient: str = "/Ingredients"
     RouteCreateIngredient: str = "/Ingredients/New"
-
 
     @staticmethod
     def SetPage(page: flet.Page):
@@ -115,7 +115,7 @@ class Rout:
             try:
                 on_rout_change(e)
             except Exception as ex:
-                print(f"Error on routing {e.route}: {ex}")
+                LogError(f"Error on routing {e.route}: {ex}")
 
         return on_rout_change_safe
 

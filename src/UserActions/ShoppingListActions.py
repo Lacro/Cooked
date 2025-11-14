@@ -1,7 +1,7 @@
 from MyFletConstrols.MyToast import ToastSuccess, ToastError
 from Objects import Ingredient, Item
 import DataSource.DataSource as DataSource
-import traceback
+from Utils import LogError
 
 def AddItemToShoppingList(ingredient_id:int):
     ingredient = DataSource.DataSource.GetIngredientByID(ingredient_id)
@@ -20,6 +20,5 @@ def AddItemToShoppingList(ingredient_id:int):
         DataSource.DataSource.AddItemToShoppingList(new_item)
         ToastSuccess(f"Added {ingredient.name} to shopping list.")
     except Exception as e:
-        print(traceback.format_exc())
-        print(f"Error while creating item : {e}")
+        LogError(f"Error while creating item : {e}")
         ToastError(f"Failed to add {ingredient.name} to shopping list: {str(e)}")

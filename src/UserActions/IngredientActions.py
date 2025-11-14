@@ -2,6 +2,7 @@ from MyFletConstrols.MyToast import ToastSuccess, ToastError
 import Views.Rout as Rout
 import Objects.Ingredient as Ingredient
 import DataSource.DataSource as DataSource
+from Utils import LogError
 
 def CreateIngredient(name:str):
     try:
@@ -11,5 +12,5 @@ def CreateIngredient(name:str):
         Rout.Rout.GoBack()
         ToastSuccess(f"Successfully created '{name}' !")
     except Exception as e:
-        print(f"Error while creating ingredient : {e}")
+        LogError(f"Error while creating ingredient : {e}")
         ToastError(f"Error: {e} !")
