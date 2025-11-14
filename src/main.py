@@ -1,6 +1,5 @@
 import flet
 import Views.Rout as Rout
-import logging
 
 def main(page: flet.Page):
     #logging.basicConfig(level=logging.DEBUG)

@@ -74,5 +74,9 @@ class DataSource:
     @staticmethod
     def AddItemToShoppingList(item: Item.Item):
         SupaBase.AddItemToShoppingList(item)
+    
+    @staticmethod
+    def RemoveItemFromShoppingList(item_id: int):
+        SupaBase.RemoveItemFromShoppingList(item_id)
     # ========================= Shopping =========================
     # ============================================================

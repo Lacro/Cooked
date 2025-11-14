@@ -64,9 +64,10 @@ def LoadShoppingList():
 
     return [
         Item.Item(
-            elt[DBInfo.TABLE_SHOPPING_LIST_INGREDIENT_ID],
-            elt[DBInfo.TABLE_SHOPPING_LIST_QUANTITY],
-            elt[DBInfo.TABLE_SHOPPING_LIST_UNIT]
+            id              = elt[DBInfo.TABLE_SHOPPING_LIST_ID],
+            ingredient_id   = elt[DBInfo.TABLE_SHOPPING_LIST_INGREDIENT_ID],
+            quantity        = elt[DBInfo.TABLE_SHOPPING_LIST_QUANTITY],
+            unit            = elt[DBInfo.TABLE_SHOPPING_LIST_UNIT]
         )
         for elt in response.data
     ]
@@ -79,5 +80,13 @@ def AddItemToShoppingList(item: Item.Item):
                 DBInfo.TABLE_SHOPPING_LIST_QUANTITY:        item.quantity,
                 DBInfo.TABLE_SHOPPING_LIST_UNIT:            item.unit,
             })
+            .execute()
+    )
+
+def RemoveItemFromShoppingList(item_id: int):
+    (
+        supabase.table(DBInfo.TABLE_SHOPPING_LIST)
+            .delete()
+            .eq(DBInfo.TABLE_SHOPPING_LIST_INGREDIENT_ID, item_id)
             .execute()
     )

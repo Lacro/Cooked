@@ -1,4 +1,3 @@
-import DataSource.DataSource as DataSource
 
 class Ingredient:
     def __init__(self, id: int=None, name: str="", default_quantity: int=1, default_unit=""):

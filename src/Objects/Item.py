@@ -3,7 +3,8 @@ import Objects.Ingredient as Ingredient
 import DataSource.DataSource as DataSource
 
 class Item:
-    def __init__(self, ingredient_id:int, quantity: int, unit: str):
+    def __init__(self, id:int=None, ingredient_id:int=None, quantity:int=None, unit:str=""):
+        self.id = id
         self.ingredient_id:int = ingredient_id
         self.quantity:int = quantity
         self.unit:str = unit

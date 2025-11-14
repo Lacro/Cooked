@@ -11,6 +11,11 @@ def ShoppingListView() -> flet.View:
         return flet.Container(
             content = flet.Row(
                 controls=[
+                    flet.Container(width = 10),
+                    flet.Button(
+                        content=flet.Icon(flet.Icons.DELETE),
+                        on_click=lambda e: ShoppingListActions.RemoveItemFromShoppingList(item.id)
+                    ),
                     MyLabel.Text(value=item.GetIngredientName()),
                 ],
             ),
@@ -24,7 +29,6 @@ def ShoppingListView() -> flet.View:
             MySearchBar.IngredientSearchBar(on_selection=lambda e: ShoppingListActions.AddItemToShoppingList(e.control.data)),
             flet.ListView(
                 controls= [ShoppingListItemView(item) for item in DataSource.DataSource.GetShoppingList()],
-                divider_thickness=0,
                 expand=True,
                 spacing=10,
                 padding=20,
