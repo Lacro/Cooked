@@ -2,15 +2,16 @@ import flet as flet
 import Views.Rout as Rout
 import DataSource.DataSource as DB
 import DataSource.DataSource as DataSource
-import Settings.Colors as AppColors
+import Settings.Parameters as Parameters
 import Objects.Recipe as Recipe
 import Views.IngredientViews as IngredientViews
+import MyFletConstrols.MyLabel as MyLabel
 
 def RecipeViewByID(recipeID:int) -> flet.Column:
     recipe = DB.DataSource.GetRecipeByID(recipeID)
 
     if not recipe:
-        return flet.Text(f"Recipe {Rout.template_route.id} not found")
+        return MyLabel.Text(f"Recipe {Rout.template_route.id} not found")
     else:
         return flet.Column(controls = [
                 flet.Row(controls = [
@@ -19,40 +20,25 @@ def RecipeViewByID(recipeID:int) -> flet.Column:
                             on_click=lambda e: print("Add Ingredient clicked!")
                         ),
                         flet.Container(
-                            content=flet.Text(
-                                recipe.name,
-                                color=AppColors.AppColors.RecipeItemViewFontColor,
-                            ),
-                            bgcolor=AppColors.AppColors.IngredientItemViewBackground,
+                            content=MyLabel.Text(recipe.name),
+                            bgcolor=Parameters.AppColors.IngredientItemViewBackground,
                             alignment=flet.alignment.center,
                         ),
                     ]),
-                flet.Text(
-                    "Ingredients :",
-                    color=AppColors.AppColors.RecipeItemViewFontColor,
-                    bgcolor=AppColors.AppColors.IngredientItemViewBackground,
-                ),
+                MyLabel.Text("Ingredients :", bgcolor=Parameters.AppColors.IngredientItemViewBackground),
                 IngredientViews.IngredientListView(recipe.items),
-                flet.Text(
-                    "Steps :",
-                    color=AppColors.AppColors.RecipeItemViewFontColor,
-                    bgcolor=AppColors.AppColors.IngredientItemViewBackground,
-                ),
+                MyLabel.Text("Steps :", bgcolor=Parameters.AppColors.IngredientItemViewBackground),
             ])
 
 def RecipeListView() -> flet.View:
     def RecipeListItemView(recipe:Recipe.Recipe) -> flet.Container:
         return flet.Container(
             content=flet.CupertinoButton(
-                content=flet.Text(
-                    recipe.name,
-                    text_align=flet.TextAlign.CENTER,
-                    color=AppColors.AppColors.RecipeItemViewFontColor,
-                ),
+                content=MyLabel.Text(recipe.name),
                 on_click=lambda e: Rout.Rout.Go(f"/Recipes/{recipe.id}/"),
                 border_radius=10,
             ),
-            bgcolor=AppColors.AppColors.RecipeItemViewBackground,
+            bgcolor=Parameters.AppColors.RecipeItemViewBackground,
             alignment=flet.alignment.center,
         )
 

@@ -1,5 +1,6 @@
 import flet as flet
 import DataSource.DataSource as DataSource
+import MyFletConstrols.MyLabel as MyLabel
 
 class SearchBar(flet.SearchBar):
     def __init__(self, **kwargs):
@@ -29,7 +30,7 @@ class IngredientSearchBar(SearchBar):
     def GetControls(self, on_selection):
         return  [
             flet.ListTile(
-                title=flet.Text(ingredient.name),
+                title=MyLabel.Text(ingredient.name),
                 on_click=self.on_element_clicked(on_selection=on_selection),
                 data=ingredient.id,
             )

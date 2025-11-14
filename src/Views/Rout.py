@@ -5,6 +5,7 @@ import Views.ShoppingViews as ShoppingViews
 import Views.RecipeViews as RecipeViews
 import Views.IngredientViews as IngredientViews
 from Utils import LogError
+import MyFletConstrols.MyLabel as MyLabel
 
 class Rout:
     page: flet.Page = None
@@ -43,7 +44,7 @@ class Rout:
         def on_rout_change(e: flet.RouteChangeEvent):
             Rout.template_route.route = e.route # update the route in the template route module
 
-            curent_view = flet.Text(f"404: Page not Found : {e.route}")
+            curent_view = MyLabel.Text(f"404: Page not Found : {e.route}")
 
             # ============================================================
             # ========================= Recipes ==========================
@@ -94,11 +95,7 @@ class Rout:
                             controls=[
                                 flet.Button("Back", on_click=Rout.GoBack),
                                 flet.Container(
-                                    flet.Text(
-                                        f"COOKED",
-                                        style=flet.TextThemeStyle.HEADLINE_MEDIUM,
-                                        text_align=flet.TextAlign.CENTER,
-                                    ),
+                                    MyLabel.Title(f"COOKED", style=flet.TextThemeStyle.HEADLINE_MEDIUM),
                                     expand=True,
                                     alignment=flet.alignment.center,
                                 ),

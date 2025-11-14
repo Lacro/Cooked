@@ -2,23 +2,20 @@ import flet
 import Views.Rout as Rout
 import UserActions.IngredientActions as IngredientActions
 import DataSource.DataSource as DB
-import Settings.Colors as AppColors
+import Settings.Parameters as Parameters
 import Objects.Ingredient as Ingredient
 import DataSource.DataSource as DataSource
+import MyFletConstrols.MyLabel as MyLabel
 
 def IngredientViewByID(ingredient_id:int) -> flet.Container:
     ingredient = DB.DataSource.GetIngredientByID(ingredient_id)
 
     if not ingredient:
-        return flet.Text(f"Ingredient {Rout.template_route.id} not found")
+        return MyLabel.Text(f"Ingredient {Rout.template_route.id} not found")
     else:
         return flet.Container(
-            content=flet.Text(
-                    ingredient.name,
-                    text_align=flet.TextAlign.CENTER,
-                    color=AppColors.AppColors.IngredientItemViewFontColor,
-                ),
-            bgcolor=AppColors.AppColors.IngredientItemViewBackground,
+            content=MyLabel.Text(ingredient.name),
+            bgcolor=Parameters.AppColors.IngredientItemViewBackground,
             alignment=flet.alignment.center,
         )
 
@@ -26,15 +23,11 @@ def IngredientListView(selection:list[int] = [], withAddButton:bool=False) -> fl
     def IngredientListItemView(ingredient:Ingredient.Ingredient) -> flet.Container:
         return flet.Container(
             content=flet.CupertinoButton(
-                content=flet.Text(
-                    ingredient.name,
-                    text_align=flet.TextAlign.CENTER,
-                    color=AppColors.AppColors.IngredientItemViewFontColor,
-                ),
+                content=MyLabel.Text(ingredient.name),
                 on_click=lambda e: Rout.Rout.Go(f"/Ingredients/{ingredient.id}/"),
                 border_radius=10,
             ),
-            bgcolor=AppColors.AppColors.IngredientItemViewBackground,
+            bgcolor=Parameters.AppColors.IngredientItemViewBackground,
             alignment=flet.alignment.center,
         )
 
@@ -70,12 +63,8 @@ def CreateIngredientView() -> flet.Container:
     return flet.Column(
         controls=[
             flet.Container(
-                content=flet.Text(
-                        "Create Ingredient",
-                        text_align=flet.TextAlign.CENTER,
-                        color=AppColors.AppColors.IngredientItemViewFontColor,
-                    ),
-                bgcolor=AppColors.AppColors.IngredientItemViewBackground,
+                content=MyLabel.Text("Create Ingredient"),
+                bgcolor=Parameters.AppColors.IngredientItemViewBackground,
                 alignment=flet.alignment.center,
             ),
             inputName,
