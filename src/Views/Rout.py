@@ -95,7 +95,7 @@ class Rout:
                             controls=[
                                 flet.Button("Back", on_click=Rout.GoBack),
                                 flet.Container(
-                                    MyLabel.Title(f"COOKED", style=flet.TextThemeStyle.HEADLINE_MEDIUM),
+                                    MyLabel.Title(f"COOKED", theme_style=flet.TextThemeStyle.HEADLINE_MEDIUM),
                                     expand=True,
                                     alignment=flet.alignment.center,
                                 ),

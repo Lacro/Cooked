@@ -18,7 +18,6 @@ class DataSource:
     
     @staticmethod
     def GetRecipeByID(id: int) -> Recipe.Recipe | None:
-        print(f"GetRecipeByID {id}")
         for recipe in DataSource.GetRecipes():
             if recipe.id == id:
                 return recipe
@@ -41,7 +40,6 @@ class DataSource:
     
     @staticmethod
     def GetIngredientByID(id: int) -> Ingredient.Ingredient | None:
-        print(f"GetIngredientByID {id}")
         for ingredient in DataSource.GetIngredients():
             if ingredient.id == id:
                 return ingredient

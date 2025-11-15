@@ -11,9 +11,7 @@ class SearchBar(flet.SearchBar):
 
         super().__init__(**kwargs)
     
-    def handle_tap(self, e):
-        print(f"handle_tap: {self} {e}")
-        self.open_view()
+    def handle_tap(self, e): self.open_view()
 
     def handle_change(self, e):
         print(f"handle_change: {self} {e}")
