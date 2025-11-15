@@ -3,12 +3,34 @@ import Objects.Ingredient as Ingredient
 import Objects.Item as Item
 import DataSource.DataBaseInfo as DBInfo
 import DataSource.DataBaseSecrets as DataBaseSecrets
-from supabase import create_client, Client
+from supabase import create_client, Client, acreate_client, AsyncClient
 
 supabase: Client = create_client(
     DataBaseSecrets.SUPABASE_URL,
     DataBaseSecrets.SUPABASE_KEY,
 )
+
+async def Initialize(callback):
+    asyncsupabase: AsyncClient = await acreate_client(
+        DataBaseSecrets.SUPABASE_URL,
+        DataBaseSecrets.SUPABASE_KEY,
+    )
+
+    def handle_record_updated(payload):
+        callback()
+
+    response = (
+        await asyncsupabase
+            .channel("shopping_list:all")
+            .on_postgres_changes(
+                "*",
+                schema="public",
+                table=DBInfo.TABLE_SHOPPING_LIST,
+                callback=handle_record_updated
+            )
+            .subscribe()
+    )
+
 
 def LoadRecipes():
     response = (

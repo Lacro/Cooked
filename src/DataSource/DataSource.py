@@ -6,6 +6,10 @@ import Objects.Recipe as Recipe
 import Objects.Ingredient as Ingredient
 
 class DataSource:
+    @staticmethod
+    async def Initialize(callback):
+        await SupaBase.Initialize(callback)
+
     # ============================================================
     # ========================= Recipes ==========================
     recipes = []

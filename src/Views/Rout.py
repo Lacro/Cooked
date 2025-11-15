@@ -34,6 +34,10 @@ class Rout:
     def GoBack(page=None): Rout.page.on_view_pop(Rout.page)
 
     @staticmethod
+    def Refresh():
+        print("Rout.Refresh called")
+        pass
+    @staticmethod
     def RouteIsLike(route: str) -> bool:
         return Rout.template_route.match(route)
 
