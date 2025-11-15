@@ -43,13 +43,13 @@ def LoadIngredients():
         for elt in response.data
     ]
 
-def AddIngredient(ingredient):
+def AddIngredient(ingredient:Ingredient.Ingredient):
     (
         supabase.table(DBInfo.TABLE_INGREDIENTS)
             .insert({
                 DBInfo.TABLE_INGREDIENTS_NAME:              ingredient.name,
-                DBInfo.TABLE_INGREDIENTS_DEFAULT_QUANTITY:  ingredient.quantity,
-                DBInfo.TABLE_INGREDIENTS_DEFAULT_UNIT:      ingredient.unit,
+                DBInfo.TABLE_INGREDIENTS_DEFAULT_QUANTITY:  ingredient.default_quantity,
+                DBInfo.TABLE_INGREDIENTS_DEFAULT_UNIT:      ingredient.default_unit,
             })
             .execute()
     )
