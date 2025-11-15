@@ -23,10 +23,10 @@ def AddItemToShoppingList(ingredient_id:int):
         LogError(f"Error while creating item : {e}")
         ToastError(f"Failed to add {ingredient.name} to shopping list: {str(e)}")
 
-def RemoveItemFromShoppingList(item_id:int):
+def RemoveItemFromShoppingList(ingredient_id:int):
     try:
-        DataSource.DataSource.RemoveItemFromShoppingList(item_id)
+        DataSource.DataSource.RemoveItemFromShoppingList(ingredient_id)
         ToastSuccess(f"Removed item from shopping list.")
     except Exception as e:
-        LogError(f"Error while removing item ID {item_id} : {e}")
+        LogError(f"Error while removing item ID {ingredient_id} : {e}")
         ToastError(f"Failed to remove item from shopping list: {str(e)}")

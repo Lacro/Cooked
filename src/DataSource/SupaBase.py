@@ -19,8 +19,8 @@ def LoadRecipes():
 
     return [
         Recipe.Recipe(
-            elt[DBInfo.TABLE_RECIPES_ID],
-            elt[DBInfo.TABLE_RECIPES_NAME],
+            id      = elt[DBInfo.TABLE_RECIPES_ID],
+            name    = elt[DBInfo.TABLE_RECIPES_NAME],
         )
         for elt in response.data
     ]
@@ -64,7 +64,6 @@ def LoadShoppingList():
 
     return [
         Item.Item(
-            id              = elt[DBInfo.TABLE_SHOPPING_LIST_ID],
             ingredient_id   = elt[DBInfo.TABLE_SHOPPING_LIST_INGREDIENT_ID],
             quantity        = elt[DBInfo.TABLE_SHOPPING_LIST_QUANTITY],
             unit            = elt[DBInfo.TABLE_SHOPPING_LIST_UNIT]
@@ -83,10 +82,10 @@ def AddItemToShoppingList(item: Item.Item):
             .execute()
     )
 
-def RemoveItemFromShoppingList(item_id: int):
+def RemoveItemFromShoppingList(ingredient_id: int):
     (
         supabase.table(DBInfo.TABLE_SHOPPING_LIST)
             .delete()
-            .eq(DBInfo.TABLE_SHOPPING_LIST_INGREDIENT_ID, item_id)
+            .eq(DBInfo.TABLE_SHOPPING_LIST_INGREDIENT_ID, ingredient_id)
             .execute()
     )

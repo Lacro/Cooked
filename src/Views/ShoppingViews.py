@@ -14,7 +14,7 @@ def ShoppingListView() -> flet.View:
                     flet.Container(width = 10),
                     flet.Button(
                         content=flet.Icon(flet.Icons.DELETE),
-                        on_click=lambda e: ShoppingListActions.RemoveItemFromShoppingList(item.id)
+                        on_click=lambda e: ShoppingListActions.RemoveItemFromShoppingList(item.ingredient_id)
                     ),
                     MyLabel.Text(value=item.GetIngredientName()),
                 ],
