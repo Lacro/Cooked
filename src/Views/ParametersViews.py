@@ -8,7 +8,7 @@ def ParmatersView() -> flet.View:
             MyLabel.Text("Params View"),
             flet.Button(
                 "Edit ingredients",
-                on_click=lambda e: Rout.Rout.Go(Rout.Rout.RouteAllIngredient)
+                on_click=lambda e: Rout.Rout.go(Rout.Rout.RouteAllIngredient)
             )
         ],
         expand=True,

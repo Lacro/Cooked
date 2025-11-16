@@ -21,14 +21,15 @@ class Rout:
     @staticmethod
     def InitRouter(page: flet.Page):
         Rout.page = page
-
-        Rout.template_route = TemplateRoute(page.route)
         Rout.page.on_route_change = Rout.on_rout_change_safe
         Rout.page.on_view_pop = Rout.on_pop
-        Rout.page.go(page.route)
-        Rout.Go = Rout.page.go # easier access to the page.go method
-        Rout.hist = []
+        Rout.go = Rout.page.go # easier access to the page.go method
+        
+        Rout.template_route = TemplateRoute(page.route)
+        Rout.rout_is_like = Rout.template_route.match
 
+        Rout.hist = []
+        Rout.go(Rout.RouteAllRecipe)
         Rout.page.bottom_appbar = Rout.get_navigation_bar()
         Rout.body = flet.Container(content=flet.Text(""), expand=True)
 
@@ -39,7 +40,7 @@ class Rout:
                     flet.Container(height = 20), # spacer to avoid front camera inside display
                     flet.Row(
                         controls=[
-                            flet.Button("Back", on_click=Rout.GoBack),
+                            flet.Button("Back", on_click=Rout.go_back),
                             flet.Container(
                                 MyLabel.Title(f"COOKED", theme_style=flet.TextThemeStyle.HEADLINE_MEDIUM),
                                 expand=True,
@@ -52,15 +53,12 @@ class Rout:
         ))
 
     @staticmethod
-    def GoBack(page=None): Rout.page.on_view_pop(Rout.page)
+    def go_back(page=None): Rout.page.on_view_pop(Rout.page)
 
     @staticmethod
-    def Refresh():
+    def refresh():
         cur_path = Rout.hist.pop()
         Rout.on_rout_change_safe(flet.RouteChangeEvent(cur_path))
-
-    @staticmethod
-    def RouteIsLike(route: str) -> bool: return Rout.template_route.match(route)
 
     @staticmethod
     def on_rout_change_safe(e: flet.RouteChangeEvent):
@@ -75,9 +73,9 @@ class Rout:
 
             # ============================================================
             # ========================= Recipes ==========================
-            if Rout.RouteIsLike("/") or Rout.RouteIsLike(Rout.RouteAllRecipe):
+            if Rout.rout_is_like("/") or Rout.rout_is_like(Rout.RouteAllRecipe):
                 curent_view = RecipeViews.RecipeListView()
-            elif Rout.RouteIsLike("/Recipes/:id") and hasattr(Rout.template_route, 'id'):
+            elif Rout.rout_is_like("/Recipes/:id") and hasattr(Rout.template_route, 'id'):
                 curent_view = RecipeViews.RecipeViewByID(int(Rout.template_route.id))
             # ========================= Recipes ==========================
             # ============================================================
@@ -85,11 +83,11 @@ class Rout:
 
             # ============================================================
             # ======================== Ingredient ========================
-            elif Rout.RouteIsLike(Rout.RouteAllIngredient):
+            elif Rout.rout_is_like(Rout.RouteAllIngredient):
                 curent_view = IngredientViews.IngredientListView(withAddButton=True)
-            elif Rout.RouteIsLike(Rout.RouteCreateIngredient):
+            elif Rout.rout_is_like(Rout.RouteCreateIngredient):
                 curent_view = IngredientViews.CreateIngredientView()
-            elif Rout.RouteIsLike("/Ingredients/:id") and hasattr(Rout.template_route, 'id'):
+            elif Rout.rout_is_like("/Ingredients/:id") and hasattr(Rout.template_route, 'id'):
                 curent_view = IngredientViews.IngredientViewByID(int(Rout.template_route.id))
             # ======================== Ingredient ========================
             # ============================================================
@@ -97,7 +95,7 @@ class Rout:
 
             # ============================================================
             # ========================= Shopping =========================
-            elif Rout.RouteIsLike(Rout.RouteShoppingList):
+            elif Rout.rout_is_like(Rout.RouteShoppingList):
                 curent_view = ShoppingViews.ShoppingListView()
             # ========================= Shopping =========================
             # ============================================================
@@ -105,7 +103,7 @@ class Rout:
 
             # ============================================================
             # ======================== Parameters ========================
-            elif Rout.RouteIsLike(Rout.HomeParamsRoute):
+            elif Rout.rout_is_like(Rout.HomeParamsRoute):
                 curent_view = ParametersViews.ParmatersView()
             # ======================== Parameters ========================
             # ============================================================
@@ -121,7 +119,7 @@ class Rout:
     def on_pop(view):
         if len(Rout.hist) > 1:
             Rout.hist.pop()
-            Rout.Go(Rout.hist[-1])
+            Rout.go(Rout.hist[-1])
             Rout.hist.pop()
     
     @staticmethod

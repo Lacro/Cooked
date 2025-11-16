@@ -9,7 +9,7 @@ def CreateIngredient(name:str):
         ingredient = Ingredient.Ingredient(name=name)
         ingredient.Validate()
         DataSource.DataSource.AddIngredient(ingredient)
-        Rout.Rout.GoBack()
+        Rout.Rout.go_back()
         ToastSuccess(f"Successfully created '{name}' !")
     except Exception as e:
         LogError(f"Error while creating ingredient : {e}")

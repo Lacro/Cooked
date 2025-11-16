@@ -35,7 +35,7 @@ def RecipeListView() -> flet.View:
         return flet.Container(
             content=flet.CupertinoButton(
                 content=MyLabel.Text(recipe.name),
-                on_click=lambda e: Rout.Rout.Go(f"/Recipes/{recipe.id}/"),
+                on_click=lambda e: Rout.Rout.go(f"/Recipes/{recipe.id}/"),
                 border_radius=10,
             ),
             bgcolor=Parameters.AppColors.RecipeItemViewBackground,

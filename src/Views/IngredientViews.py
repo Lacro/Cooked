@@ -24,7 +24,7 @@ def IngredientListView(selection:list[int] = [], withAddButton:bool=False) -> fl
         return flet.Container(
             content=flet.CupertinoButton(
                 content=MyLabel.Text(ingredient.name),
-                on_click=lambda e: Rout.Rout.Go(f"/Ingredients/{ingredient.id}/"),
+                on_click=lambda e: Rout.Rout.go(f"/Ingredients/{ingredient.id}/"),
                 border_radius=10,
             ),
             bgcolor=Parameters.AppColors.IngredientItemViewBackground,
@@ -36,7 +36,7 @@ def IngredientListView(selection:list[int] = [], withAddButton:bool=False) -> fl
         constrols.append(
             flet.Button(
                 "Add New Ingredient",
-                on_click=lambda e: Rout.Rout.Go(Rout.Rout.RouteCreateIngredient),
+                on_click=lambda e: Rout.Rout.go(Rout.Rout.RouteCreateIngredient),
         ))
 
     constrols.append(
