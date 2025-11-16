@@ -52,6 +52,7 @@ class DataSource:
     @staticmethod
     def AddIngredient(ingredient: Ingredient):
         SupaBase.AddIngredient(ingredient)
+        DataSource.ingredients = [] # force reload on next access, todo: optimisation
     
     @staticmethod
     def GetNewIngredientId() -> int:
@@ -76,9 +77,11 @@ class DataSource:
     @staticmethod
     def AddItemToShoppingList(item: Item.Item):
         SupaBase.AddItemToShoppingList(item)
+        DataSource.shoppingList = [] # force reload on next access, todo: optimisation
     
     @staticmethod
     def RemoveItemFromShoppingList(ingredient_id: int):
         SupaBase.RemoveItemFromShoppingList(ingredient_id)
+        DataSource.shoppingList = [] # force reload on next access, todo: optimisation
     # ========================= Shopping =========================
     # ============================================================

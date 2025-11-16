@@ -9,6 +9,6 @@ async def main(page: flet.Page):
 
     await DataSource.DataSource.Initialize(Rout.Rout.Refresh)
 
-    Rout.Rout.SetPage(page)
+    Rout.Rout.InitRouter(page)
 
 flet.app(main, assets_dir="assets", view=flet.AppView.WEB_BROWSER)

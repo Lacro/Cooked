@@ -19,41 +19,63 @@ class Rout:
     RouteCreateIngredient: str = "/Ingredients/New"
 
     @staticmethod
-    def SetPage(page: flet.Page):
+    def InitRouter(page: flet.Page):
         Rout.page = page
-        Rout.page.title = "Cooked"
-        
-        Rout.template_route = TemplateRoute(page.route)
 
-        Rout.page.on_route_change = Rout.get_router()
-        Rout.page.on_view_pop = Rout.get_poper()
+        Rout.template_route = TemplateRoute(page.route)
+        Rout.page.on_route_change = Rout.on_rout_change_safe
+        Rout.page.on_view_pop = Rout.on_pop
         Rout.page.go(page.route)
         Rout.Go = Rout.page.go # easier access to the page.go method
+        Rout.hist = []
+
+        Rout.page.bottom_appbar = Rout.get_navigation_bar()
+        Rout.body = flet.Container(content=flet.Text(""), expand=True)
+
+        Rout.page.title = "Cooked"
+        Rout.page.add(
+            flet.Column(
+                controls=[
+                    flet.Container(height = 20), # spacer to avoid front camera inside display
+                    flet.Row(
+                        controls=[
+                            flet.Button("Back", on_click=Rout.GoBack),
+                            flet.Container(
+                                MyLabel.Title(f"COOKED", theme_style=flet.TextThemeStyle.HEADLINE_MEDIUM),
+                                expand=True,
+                                alignment=flet.alignment.center,
+                            ),
+                        ],
+                    ),
+                    Rout.body,
+                ]
+        ))
 
     @staticmethod
     def GoBack(page=None): Rout.page.on_view_pop(Rout.page)
 
     @staticmethod
     def Refresh():
-        print("Rout.Refresh called")
-        pass
-    @staticmethod
-    def RouteIsLike(route: str) -> bool:
-        return Rout.template_route.match(route)
+        cur_path = Rout.hist.pop()
+        Rout.on_rout_change_safe(flet.RouteChangeEvent(cur_path))
 
     @staticmethod
-    def get_router():
-        navigationBar = Rout.get_navigation_bar()
+    def RouteIsLike(route: str) -> bool: return Rout.template_route.match(route)
 
+    @staticmethod
+    def on_rout_change_safe(e: flet.RouteChangeEvent):
         def on_rout_change(e: flet.RouteChangeEvent):
             Rout.template_route.route = e.route # update the route in the template route module
+            Rout.hist.append(e.route)
+
+            print(f"Routing to {e.route}")
+            print(f"Rout.hist: {Rout.hist}")
 
             curent_view = MyLabel.Text(f"404: Page not Found : {e.route}")
 
             # ============================================================
             # ========================= Recipes ==========================
             if Rout.RouteIsLike("/") or Rout.RouteIsLike(Rout.RouteAllRecipe):
-                Rout.page.views.clear()
                 curent_view = RecipeViews.RecipeListView()
             elif Rout.RouteIsLike("/Recipes/:id") and hasattr(Rout.template_route, 'id'):
                 curent_view = RecipeViews.RecipeViewByID(int(Rout.template_route.id))
@@ -76,7 +98,6 @@ class Rout:
             # ============================================================
             # ========================= Shopping =========================
             elif Rout.RouteIsLike(Rout.RouteShoppingList):
-                Rout.page.views.clear()
                 curent_view = ShoppingViews.ShoppingListView()
             # ========================= Shopping =========================
             # ============================================================
@@ -85,50 +106,23 @@ class Rout:
             # ============================================================
             # ======================== Parameters ========================
             elif Rout.RouteIsLike(Rout.HomeParamsRoute):
-                Rout.page.views.clear()
                 curent_view = ParametersViews.ParmatersView()
             # ======================== Parameters ========================
             # ============================================================
             
-            Rout.page.views.append(
-                flet.View(
-                    route=e.route,
-                    controls = [
-                        flet.Container(height = 20), # spacer to avoid front camera inside display
-                        flet.Row(
-                            controls=[
-                                flet.Button("Back", on_click=Rout.GoBack),
-                                flet.Container(
-                                    MyLabel.Title(f"COOKED", theme_style=flet.TextThemeStyle.HEADLINE_MEDIUM),
-                                    expand=True,
-                                    alignment=flet.alignment.center,
-                                ),
-                            ],
-                        ),
-                        curent_view,
-                        navigationBar,
-                    ],
-                )
-            )
+            Rout.body.content = curent_view
             Rout.page.update()
+        
+        try:
+            on_rout_change(e)
+        except Exception as ex:
+            LogError(f"Error on routing {e.route}: {ex}")
 
-        def on_rout_change_safe(e: flet.RouteChangeEvent):
-            try:
-                on_rout_change(e)
-            except Exception as ex:
-                LogError(f"Error on routing {e.route}: {ex}")
-
-        return on_rout_change_safe
-
-    @staticmethod
-    def get_poper():
-        def on_pop(view):
-            if len(Rout.page.views) >= 2:
-                Rout.page.views.pop()
-            Rout.Go(Rout.page.views[-1].route)
-            Rout.page.views.pop()
-
-        return on_pop
+    def on_pop(view):
+        if len(Rout.hist) > 1:
+            Rout.hist.pop()
+            Rout.Go(Rout.hist[-1])
+            Rout.hist.pop()
     
     @staticmethod
     def get_navigation_bar():
