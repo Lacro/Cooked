@@ -1,9 +1,11 @@
+from typing import Optional
+
 import Objects.Units as Units
 import Objects.Ingredient as Ingredient
 import DataSource.DataSource as DataSource
 
 class Item:
-    def __init__(self, ingredient_id:int=None, quantity:int=None, unit:str=""):
+    def __init__(self, ingredient_id:Optional[int]=None, quantity:int=1, unit:str=""):
         self.ingredient_id:int = ingredient_id
         self.quantity:int = quantity
         self.unit:str = unit

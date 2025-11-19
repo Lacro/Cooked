@@ -111,3 +111,14 @@ def RemoveItemFromShoppingList(ingredient_id: int):
             .eq(DBInfo.TABLE_SHOPPING_LIST_INGREDIENT_ID, ingredient_id)
             .execute()
     )
+
+def UpdateItemInShoppingList(item: Item.Item):
+    (
+        supabase.table(DBInfo.TABLE_SHOPPING_LIST)
+            .update({
+                DBInfo.TABLE_SHOPPING_LIST_QUANTITY: item.quantity,
+                DBInfo.TABLE_SHOPPING_LIST_UNIT:     item.unit,
+            })
+            .eq(DBInfo.TABLE_SHOPPING_LIST_INGREDIENT_ID, item.ingredient_id)
+            .execute()
+    )

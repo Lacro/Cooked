@@ -1,6 +1,7 @@
+from typing import Optional
 
 class Ingredient:
-    def __init__(self, id: int=None, name: str="", default_quantity: int=1, default_unit=""):
+    def __init__(self, id: Optional[int]=None, name: str="", default_quantity: int=1, default_unit=""):
         self.id = id
         self.name = name
         self.default_quantity = default_quantity

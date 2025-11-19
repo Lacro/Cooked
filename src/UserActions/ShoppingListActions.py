@@ -30,3 +30,18 @@ def RemoveItemFromShoppingList(ingredient_id:int):
     except Exception as e:
         LogError(f"Error while removing item ID {ingredient_id} : {e}")
         ToastError(f"Failed to remove item from shopping list: {str(e)}")
+
+def UpdateItemInShoppingList(item:Item.Item, quantity:int, unit:str) -> bool:
+    try:
+        updatedItem = item
+        updatedItem.quantity = int(quantity)
+        updatedItem.unit = unit
+
+        updatedItem.Validate()
+
+        DataSource.DataSource.UpdateItemInShoppingList(updatedItem)
+        ToastSuccess(f"Updated item.")
+        return True
+    except Exception as ex:
+        ToastError(f"Failed to update item: {str(ex)}")
+        return False

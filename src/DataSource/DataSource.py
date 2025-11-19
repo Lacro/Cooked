@@ -89,5 +89,10 @@ class DataSource:
     def RemoveItemFromShoppingList(ingredient_id: int):
         DataSource.shoppingList = [] # force reload on next access, todo: optimisation
         SupaBase.RemoveItemFromShoppingList(ingredient_id)
+    
+    @staticmethod
+    def UpdateItemInShoppingList(item: Item.Item):
+        DataSource.shoppingList = [] # force reload on next access, todo: optimisation
+        SupaBase.UpdateItemInShoppingList(item)
     # ========================= Shopping =========================
     # ============================================================
