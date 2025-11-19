@@ -8,7 +8,13 @@ import Objects.Ingredient as Ingredient
 class DataSource:
     @staticmethod
     async def Initialize(callback):
-        await SupaBase.Initialize(callback)
+        def wrapped_callback():
+            # Clear cached data
+            DataSource.shoppingList = []
+            # Call the user-defined callback
+            callback()
+        
+        await SupaBase.Initialize(wrapped_callback)
 
     # ============================================================
     # ========================= Recipes ==========================
@@ -51,8 +57,8 @@ class DataSource:
     
     @staticmethod
     def AddIngredient(ingredient: Ingredient):
-        SupaBase.AddIngredient(ingredient)
         DataSource.ingredients = [] # force reload on next access, todo: optimisation
+        SupaBase.AddIngredient(ingredient)
     
     @staticmethod
     def GetNewIngredientId() -> int:
@@ -76,12 +82,12 @@ class DataSource:
 
     @staticmethod
     def AddItemToShoppingList(item: Item.Item):
-        SupaBase.AddItemToShoppingList(item)
         DataSource.shoppingList = [] # force reload on next access, todo: optimisation
+        SupaBase.AddItemToShoppingList(item)
     
     @staticmethod
     def RemoveItemFromShoppingList(ingredient_id: int):
-        SupaBase.RemoveItemFromShoppingList(ingredient_id)
         DataSource.shoppingList = [] # force reload on next access, todo: optimisation
+        SupaBase.RemoveItemFromShoppingList(ingredient_id)
     # ========================= Shopping =========================
     # ============================================================
