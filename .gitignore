@@ -164,3 +164,4 @@ storage/
 /.vscode
 src/Test.py
 src/DataSource/DataBaseSecrets.py
+/release

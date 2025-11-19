@@ -5,10 +5,11 @@ description = ""
 readme = "README.md"
 requires-python = ">=3.9"
 authors = [
-    { name = "Flet developer", email = "you@example.com" }
+    { name = "Max Renie", email = "max.renie.halo@gmail.com" }
 ]
 dependencies = [
-  "flet==0.28.3"
+  "flet==0.28.3",
+  "supabase",
 ]
 
 [tool.flet]
@@ -24,7 +25,7 @@ product = "cooked"
 company = "Flet"
 
 # copyright text to display in about app dialogs
-copyright = "Copyright (C) 2025 by Flet"
+copyright = "Copyright (C) 2025 by Max Renie"
 
 [tool.flet.app]
 path = "src"

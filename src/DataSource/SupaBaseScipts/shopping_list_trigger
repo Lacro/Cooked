@@ -1,0 +1,32 @@
+
+-- Broadcast trigger function
+CREATE OR REPLACE FUNCTION shopping_list_broadcast_trigger()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+BEGIN
+    PERFORM realtime.broadcast_changes(
+        'shopping_list:all',  -- topic
+        TG_OP,                -- event name (INSERT/UPDATE/DELETE)
+        TG_OP,                -- type
+        TG_TABLE_NAME,
+        TG_TABLE_SCHEMA,
+        NEW,
+        OLD
+    );
+    RETURN COALESCE(NEW, OLD);
+    END;
+$$;
+
+-- Create trigger
+DROP TRIGGER IF EXISTS shopping_list_broadcast_trigger ON public.shopping_list;
+CREATE TRIGGER shopping_list_broadcast_trigger
+    AFTER INSERT OR UPDATE OR DELETE ON public.shopping_list
+    FOR EACH ROW EXECUTE FUNCTION shopping_list_broadcast_trigger();
+
+-- Create policy to allow authenticated users to receive messages on the shopping_list topic
+DROP POLICY IF EXISTS "authenticated_can_receive_shopping_list" ON realtime.messages;
+CREATE POLICY "authenticated_can_receive_shopping_list" ON realtime.messages
+    FOR SELECT TO authenticated
+    USING (topic = 'shopping_list:all');
