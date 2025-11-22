@@ -1,9 +1,12 @@
 import flet
 from flet import TemplateRoute
-import Views.ParametersViews as ParametersViews
-import Views.ShoppingViews as ShoppingViews
-import Views.RecipeViews as RecipeViews
-import Views.IngredientViews as IngredientViews
+import Views.ParametersView as ParametersView
+import Views.ShoppingListView as ShoppingListView
+import Views.Recipes.RecipeView as RecipeView
+import Views.Recipes.RecipeListView as RecipeListView
+import Views.Ingredients.IngredientView as IngredientView
+import Views.Ingredients.IngredientListView as IngredientListView
+import Views.Ingredients.CreateIngredientView as CreateIngredientView
 from Utils import LogError
 import MyFletConstrols.MyLabel as MyLabel
 
@@ -74,9 +77,9 @@ class Rout:
             # ============================================================
             # ========================= Recipes ==========================
             if Rout.rout_is_like("/") or Rout.rout_is_like(Rout.RouteAllRecipe):
-                curent_view = RecipeViews.RecipeListView()
+                curent_view = RecipeListView.RecipeListView()
             elif Rout.rout_is_like("/Recipes/:id") and hasattr(Rout.template_route, 'id'):
-                curent_view = RecipeViews.RecipeViewByID(int(Rout.template_route.id))
+                curent_view = RecipeView.RecipeViewByID(int(Rout.template_route.id))
             # ========================= Recipes ==========================
             # ============================================================
 
@@ -84,11 +87,11 @@ class Rout:
             # ============================================================
             # ======================== Ingredient ========================
             elif Rout.rout_is_like(Rout.RouteAllIngredient):
-                curent_view = IngredientViews.IngredientListView(withAddButton=True)
+                curent_view = IngredientListView.IngredientListView(withAddButton=True)
             elif Rout.rout_is_like(Rout.RouteCreateIngredient):
-                curent_view = IngredientViews.CreateIngredientView()
+                curent_view = CreateIngredientView.CreateIngredientView()
             elif Rout.rout_is_like("/Ingredients/:id") and hasattr(Rout.template_route, 'id'):
-                curent_view = IngredientViews.IngredientViewByID(int(Rout.template_route.id))
+                curent_view = IngredientView.IngredientViewByID(int(Rout.template_route.id))
             # ======================== Ingredient ========================
             # ============================================================
 
@@ -96,7 +99,7 @@ class Rout:
             # ============================================================
             # ========================= Shopping =========================
             elif Rout.rout_is_like(Rout.RouteShoppingList):
-                curent_view = ShoppingViews.ShoppingListView()
+                curent_view = ShoppingListView.ShoppingListView()
             # ========================= Shopping =========================
             # ============================================================
 
@@ -104,7 +107,7 @@ class Rout:
             # ============================================================
             # ======================== Parameters ========================
             elif Rout.rout_is_like(Rout.HomeParamsRoute):
-                curent_view = ParametersViews.ParmatersView()
+                curent_view = ParametersView.ParmatersView()
             # ======================== Parameters ========================
             # ============================================================
             

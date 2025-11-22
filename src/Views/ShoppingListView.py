@@ -21,7 +21,6 @@ def EditItemModal(item:Item.Item) -> flet.AlertDialog:
         keyboard_type=flet.KeyboardType.TEXT,
     )
 
-
     def on_save(e):
         if (ShoppingListActions.UpdateItemInShoppingList(
             item,
