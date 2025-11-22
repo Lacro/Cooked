@@ -14,18 +14,26 @@ def Toast(message: str):
 def ToastSuccess(message: str):
     Rout.Rout.page.open(
         flet.SnackBar(
-            content=MyLabel.Text(message),
-            bgcolor=Parameters.AppColors.SuccessBackGround,
-            behavior=flet.SnackBarBehavior.FLOATING,
+            flet.Row(
+                controls=[
+                    flet.Icon(flet.Icons.CHECK_CIRCLE_OUTLINE, color=Parameters.AppColors.PrimaryFontColor),
+                    MyLabel.Text(message, color=Parameters.AppColors.PrimaryFontColor)
+                ],
+            ),
+            bgcolor=Parameters.AppColors.PrimaryBackGround,
         )
     )
 
 def ToastError(message: str):
     Rout.Rout.page.open(
         flet.SnackBar(
-            content=MyLabel.Text(message),
-            bgcolor=Parameters.AppColors.ErrorBackGround,
-            behavior=flet.SnackBarBehavior.FLOATING,
+            flet.Row(
+                controls=[
+                    flet.Icon(flet.Icons.REMOVE_CIRCLE_OUTLINE, color=Parameters.AppColors.PrimaryFontColor),
+                    MyLabel.Text(message, color=Parameters.AppColors.PrimaryFontColor)
+                ],
+            ),
+            bgcolor=Parameters.AppColors.PrimaryBackGround,
         )
     )
 
@@ -34,6 +42,7 @@ def CancelToast(message: str, cancel_action):
         flet.SnackBar(
             flet.Row(
                 controls=[
+                    flet.Icon(flet.Icons.CHECK_CIRCLE_OUTLINE, color=Parameters.AppColors.PrimaryFontColor),
                     MyLabel.Text(message, color=Parameters.AppColors.PrimaryFontColor),
                     flet.Container(
                         content = MyLabel.Text(

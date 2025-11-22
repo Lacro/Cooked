@@ -12,8 +12,6 @@ class AppColors:
 
     PrimaryBackGround = "#000000"
     AlternativeBackGround = "#8F6F11"
-    SuccessBackGround = "#00FF00"
-    ErrorBackGround = "#FF0000"
 
     PrimaryFontColor = "#D2B48C"
     SecondaryFontColor = "#000000"
