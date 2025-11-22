@@ -42,11 +42,23 @@ class DataSource:
     @staticmethod
     def GetIngredients(selection:list[int] = []) -> list[Ingredient.Ingredient]:
         if not DataSource.ingredients:
-            DataSource.ingredients = SupaBase.LoadIngredients()
+            DataSource.ingredients = SupaBase.LoadIngredientsOrdered()
         
         # todo: optimisation
         if selection: return [ing for ing in DataSource.ingredients if ing.id in selection]
         else        : return DataSource.ingredients
+    
+    
+    @staticmethod
+    def GetIngredientsNotInShoppingList() -> list[Ingredient.Ingredient]:
+        shopping_ingredient_ids = [item.ingredient_id for item in DataSource.GetShoppingList()]
+
+        ret = [
+            ingredient for ingredient in DataSource.GetIngredients()
+            if ingredient.id not in shopping_ingredient_ids
+        ]
+        
+        return ret
     
     @staticmethod
     def GetIngredientByID(id: int) -> Ingredient.Ingredient | None:
@@ -77,6 +89,7 @@ class DataSource:
     def GetShoppingList() -> list[Item.Item]:
         if not DataSource.shoppingList:
             DataSource.shoppingList = SupaBase.LoadShoppingList()
+            DataSource.shoppingList.sort(key=lambda x: x.GetIngredientName().lower())
         
         return DataSource.shoppingList
 

@@ -33,7 +33,7 @@ class IngredientSearchBar(SearchBar):
                 on_click=self.on_element_clicked(on_selection=on_selection),
                 data=ingredient.id,
             )
-            for ingredient in DataSource.DataSource.GetIngredients()
+            for ingredient in DataSource.DataSource.GetIngredientsNotInShoppingList()
         ]
     
     def on_element_clicked(self, on_selection):

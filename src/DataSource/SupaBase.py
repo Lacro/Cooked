@@ -47,11 +47,12 @@ def LoadRecipes():
         for elt in response.data
     ]
 
-def LoadIngredients():
+def LoadIngredientsOrdered():
     
     response = (
         supabase.table(DBInfo.TABLE_INGREDIENTS)
         .select("*")
+        .order(DBInfo.TABLE_INGREDIENTS_NAME, desc=False)
         .execute()
     )
 
