@@ -23,3 +23,24 @@ def ToastError(message: str):
             behavior=flet.SnackBarBehavior.FLOATING,
         )
     )
+
+def CancelToast(message: str, cancel_action):
+    Rout.Rout.page.open(
+        flet.SnackBar(
+            flet.Row(
+                controls=[
+                    MyLabel.Text(message, color=Parameters.AppColors.PrimaryFontColor),
+                    flet.Container(
+                        content = MyLabel.Text(
+                            "Cancel",
+                            color=Parameters.AppColors.PrimaryFontColor,
+                        ),
+                        on_click=cancel_action,
+                        alignment=flet.alignment.center_right,
+                        expand=True,
+                    )
+                ]
+            ),
+            bgcolor=Parameters.AppColors.PrimaryBackGround,
+        )
+    )

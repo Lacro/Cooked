@@ -55,16 +55,19 @@ def ShoppingListView() -> flet.View:
             content = flet.Row(
                 controls=[
                     flet.Container(width = 10),
-                    MyLabel.Text(item.GetIngredientName(), expand=True, text_align=flet.TextAlign.LEFT),
-                    flet.Container(expand=True),
+                    MyLabel.Text(
+                        item.GetIngredientName(),
+                        expand=True,
+                        text_align=flet.TextAlign.LEFT,
+                        overflow=flet.TextOverflow.ELLIPSIS
+                    ),
                     flet.Container(
                         content=MyLabel.Text(f"{item.quantity} {item.unit}"),
                         on_click=lambda e: EditItemModal(item)
                     ),
-                    flet.Container(expand=True),
                     flet.Container(
                         content=flet.Icon(flet.Icons.DELETE, color=Parameters.AppColors.SecondaryFontColor),
-                        on_click=lambda e: ShoppingListActions.RemoveItemFromShoppingList(item.ingredient_id)
+                        on_click=lambda e: ShoppingListActions.RemoveItemFromShoppingList(item)
                     ),
                 ],
             ),
