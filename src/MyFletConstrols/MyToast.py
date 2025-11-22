@@ -3,12 +3,9 @@ import Views.Rout as Rout
 import Settings.Parameters as Parameters
 import MyFletConstrols.MyLabel as MyLabel
 
-def Toast(content, bg_color):
+def Toast(content, **kwargs):
     Rout.Rout.page.open(
-        flet.SnackBar(
-            content = content,
-            bg_color = bg_color,
-        )
+        flet.SnackBar(content, **kwargs)
     )
 
 def ToastMsg(message: str):
