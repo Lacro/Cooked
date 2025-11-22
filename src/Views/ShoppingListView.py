@@ -6,7 +6,7 @@ import DataSource.DataSource as DataSource
 import Settings.Parameters as Parameters
 import MyFletConstrols.MyLabel as MyLabel
 import Views.Rout as Rout
-from MyFletConstrols.MyToast import Toast
+from MyFletConstrols.MyToast import ToastMsg
 
 def EditItemModal(item:Item.Item) -> flet.AlertDialog:
     quantity_input = flet.TextField(
@@ -30,7 +30,7 @@ def EditItemModal(item:Item.Item) -> flet.AlertDialog:
             Rout.Rout.page.close(edit_dialog)
     
     def on_cancel(e):
-        Toast("Edit cancelled.")
+        ToastMsg("Edit cancelled.")
         Rout.Rout.page.close(edit_dialog)
 
     edit_dialog = flet.AlertDialog(
