@@ -56,9 +56,9 @@ def ShoppingListItemView(item:Item.Item) -> flet.Container:
                 flet.Container(width = 10),
                 MyLabel.Text(
                     item.GetIngredientName(),
-                    expand=True,
                     text_align=flet.TextAlign.LEFT,
-                    overflow=flet.TextOverflow.ELLIPSIS
+                    overflow=flet.TextOverflow.ELLIPSIS,
+                    expand=True,
                 ),
                 flet.Container(
                     content=MyLabel.Text(f"{item.quantity} {item.unit}"),

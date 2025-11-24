@@ -40,8 +40,17 @@ def CancelToast(message: str, cancel_action):
     Toast(
         flet.Row(
             controls=[
-                flet.Icon(flet.Icons.CHECK_CIRCLE_OUTLINE, color=Parameters.AppColors.PrimaryFontColor),
-                MyLabel.Text(message, color=Parameters.AppColors.PrimaryFontColor),
+                flet.Icon(
+                    flet.Icons.CHECK_CIRCLE_OUTLINE,
+                    color=Parameters.AppColors.PrimaryFontColor,
+                ),
+                MyLabel.Text(
+                    message,
+                    color=Parameters.AppColors.PrimaryFontColor,
+                    text_align=flet.TextAlign.LEFT,
+                    overflow=flet.TextOverflow.ELLIPSIS,
+                    expand=True,
+                ),
                 flet.Container(
                     content = MyLabel.Text(
                         "Cancel",
@@ -49,7 +58,6 @@ def CancelToast(message: str, cancel_action):
                     ),
                     on_click=cancel_action,
                     alignment=flet.alignment.center_right,
-                    expand=True,
                 )
             ]
         ),
