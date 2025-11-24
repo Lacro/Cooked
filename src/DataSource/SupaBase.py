@@ -77,6 +77,18 @@ def AddIngredient(ingredient:Ingredient.Ingredient):
             .execute()
     )
 
+def UpdateIngredient(ingredient:Ingredient.Ingredient):
+    (
+        supabase.table(DBInfo.TABLE_INGREDIENTS)
+            .update({
+                DBInfo.TABLE_INGREDIENTS_NAME:              ingredient.name,
+                DBInfo.TABLE_INGREDIENTS_DEFAULT_QUANTITY:  ingredient.default_quantity,
+                DBInfo.TABLE_INGREDIENTS_DEFAULT_UNIT:      ingredient.default_unit,
+            })
+            .eq(DBInfo.TABLE_INGREDIENTS_ID, ingredient.id)
+            .execute()
+    )
+
 
 def LoadShoppingList():
     response = (

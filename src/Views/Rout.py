@@ -4,7 +4,7 @@ import Views.ParametersView as ParametersView
 import Views.ShoppingListView as ShoppingListView
 import Views.Recipes.RecipeView as RecipeView
 import Views.Recipes.RecipeListView as RecipeListView
-import Views.Ingredients.IngredientView as IngredientView
+import Views.Ingredients.EditIngredientView as EditIngredientView
 import Views.Ingredients.IngredientListView as IngredientListView
 import Views.Ingredients.CreateIngredientView as CreateIngredientView
 from Utils import LogError
@@ -91,7 +91,7 @@ class Rout:
             elif Rout.rout_is_like(Rout.RouteCreateIngredient):
                 curent_view = CreateIngredientView.CreateIngredientView()
             elif Rout.rout_is_like("/Ingredients/:id") and hasattr(Rout.template_route, 'id'):
-                curent_view = IngredientView.IngredientViewByID(int(Rout.template_route.id))
+                curent_view = EditIngredientView.EditIngredientView(int(Rout.template_route.id))
             # ======================== Ingredient ========================
             # ============================================================
 

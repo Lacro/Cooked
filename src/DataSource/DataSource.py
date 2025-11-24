@@ -73,6 +73,11 @@ class DataSource:
         SupaBase.AddIngredient(ingredient)
     
     @staticmethod
+    def UpdateIngredient(ingredient: Ingredient):
+        DataSource.ingredients = [] # force reload on next access, todo: optimisation
+        SupaBase.UpdateIngredient(ingredient)
+    
+    @staticmethod
     def GetNewIngredientId() -> int:
         # Generate a new ID (simple increment based on existing IDs)
         # todo : data persistence and more robust ID generation
